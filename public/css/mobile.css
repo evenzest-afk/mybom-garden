@@ -76,6 +76,7 @@ body {
   margin-top: 16px; font-family: var(--sans);
   font-size: 12px; letter-spacing: .5px; color: var(--ink-faint); line-height: 1.7;
 }
+.hint-soft { display: inline-block; margin-top: 6px; color: var(--green-deep); }
 .plaque-foot {
   font-family: var(--sans); font-size: 11px; letter-spacing: 1.5px;
   color: var(--ink-faint); padding-top: 18px; border-top: 1px solid var(--line);

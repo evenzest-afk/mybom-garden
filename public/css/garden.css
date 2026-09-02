@@ -410,11 +410,13 @@ body.demo #weather-wash { transition: opacity 1.4s linear, background 1.4s linea
 }
 #qr-img { width: 128px; height: 128px; margin: 0 auto; }
 #qr-img svg { display: block; width: 100%; height: 100%; border-radius: 10px; }
+.qr-safe { display: block; margin-top: 6px; font-size: 16px; color: rgba(92, 115, 80, .95); }
 .qr-caption {
-  margin-top: 10px; font-size: 16px; letter-spacing: 1.5px;
-  color: rgba(74, 66, 56, .78);
+  margin-top: 12px; font-size: 19px; line-height: 1.6; letter-spacing: 1px;
+  color: rgba(74, 66, 56, .8);
   transition: color 6s linear;
 }
 body.dark #qr-card::before { background: rgba(251, 249, 243, .8); }
-body.dark .qr-caption { color: rgba(58, 51, 43, .85); }
+body.dark .qr-safe { display: block; margin-top: 6px; font-size: 16px; color: rgba(92, 115, 80, .95); }
+.qr-caption { color: rgba(58, 51, 43, .85); }
 body.portrait #qr-card { right: 28px; top: 30px; }

@@ -82,6 +82,14 @@
     padding: 9px 16px; font-size: 13px; letter-spacing: 1px;
   }
   .btn-soft:hover { border-color: var(--gold); background: #F8F4E9; }
+  .update-block { margin-top: 26px; border-top: 1px dashed var(--line); padding-top: 22px; }
+  .update-block h2 { font-size: 15px; letter-spacing: 3px; margin-bottom: 10px; }
+  .update-state { font-family: sans-serif; font-size: 12.5px; color: var(--soft); line-height: 1.7; margin-bottom: 4px; }
+  .update-state.new { color: var(--green); font-weight: 600; }
+  .btn-apply {
+    background: var(--green); color: #fff; border: 1px solid var(--green);
+    padding: 9px 18px; font-size: 13px; letter-spacing: 1px;
+  }
   .btn-danger {
     background: transparent; color: #9C4A38; border: 1px solid #C89484;
     padding: 10px 18px; font-size: 13px; letter-spacing: 1.5px;
@@ -144,6 +152,18 @@
         <span class="danger-note">장난이나 실수로 심긴 것을 지울 때 씁니다. 어떤 꽃인지는 화면에 표시하지 않습니다.</span>
       </div>
       <p class="saved-msg" id="undo-done"></p>
+
+      <div class="update-block">
+        <h2>프로그램 업데이트</h2>
+        <p class="update-state" id="update-state">확인해 주세요.</p>
+        <div class="setting-row">
+          <button type="button" class="btn-soft" id="btn-update-check">업데이트 확인</button>
+          <button type="button" class="btn-apply" id="btn-update-apply" hidden>지금 적용하기</button>
+          <button type="button" class="btn-soft" id="btn-update-rollback" hidden>직전 버전으로 되돌리기</button>
+        </div>
+        <p class="danger-note">적용하면 서버가 잠시 멈췄다가 자동으로 다시 켜집니다(10초쯤).
+          비밀번호와 들판의 꽃은 그대로 유지됩니다. 문제가 생기면 되돌리기를 누르세요.</p>
+      </div>
 
       <div class="danger-row">
         <button type="button" class="btn-danger" id="btn-reset-stats">통계 초기화</button>
@@ -209,6 +229,7 @@
     renderChoiceTable(document.getElementById('need-table'), days, needChoices || [], 'need');
 
     loadDisplay();
+    checkUpdate(true);
   }
 
   const CAT_KO = { clear: '맑음', cloudy: '구름 조금', overcast: '흐림', rain: '비', snow: '눈' };
@@ -269,6 +290,75 @@
   document.getElementById('btn-undo-last').addEventListener('click', () => undoFlower('last', '되돌리기'));
   document.getElementById('btn-undo-today').addEventListener('click', () => {
     if (confirm('오늘 심긴 꽃을 모두 지울까요? 되돌릴 수 없습니다.')) undoFlower('today', '오늘 정리');
+  });
+
+  const short = (sha) => (sha ? sha.slice(0, 7) : '알 수 없음');
+
+  async function checkUpdate(quiet) {
+    const st = $('#update-state');
+    if (!quiet) st.textContent = '확인하는 중...';
+    try {
+      const r = await fetch('/api/admin/update/check', { headers: { 'X-Admin-Token': token } });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.message || '확인 실패');
+      $('#btn-update-rollback').hidden = !d.canRollback;
+      if (d.updateAvailable) {
+        st.className = 'update-state new';
+        st.innerHTML = `새 버전이 있습니다 — <b>${d.message}</b><br>` +
+          `현재 ${short(d.current)} → 최신 ${short(d.latest)}`;
+        $('#btn-update-apply').hidden = false;
+      } else {
+        st.className = 'update-state';
+        st.textContent = `최신 상태입니다 (${short(d.current)}).`;
+        $('#btn-update-apply').hidden = true;
+      }
+    } catch (e) {
+      st.className = 'update-state';
+      st.textContent = '확인하지 못했습니다: ' + e.message;
+    }
+  }
+
+  async function waitForServer(st, label) {
+    for (let i = 0; i < 40; i++) {
+      await new Promise((r) => setTimeout(r, 1500));
+      try {
+        const r = await fetch('/api/config', { cache: 'no-store' });
+        if (r.ok) { st.textContent = label + ' 서버가 다시 켜졌습니다.'; checkUpdate(true); return; }
+      } catch (e) { /* 아직 꺼져 있음 */ }
+      st.textContent = label + ' 서버가 다시 켜지길 기다리는 중... (' + (i + 1) + ')';
+    }
+    st.textContent = label + ' 서버가 응답하지 않습니다. 병원 PC를 확인해 주세요.';
+  }
+
+  document.getElementById('btn-update-check').addEventListener('click', () => checkUpdate(false));
+
+  document.getElementById('btn-update-apply').addEventListener('click', async () => {
+    if (!confirm('새 버전을 지금 적용할까요?\n서버가 10초쯤 멈췄다가 자동으로 다시 켜집니다.')) return;
+    const st = $('#update-state');
+    st.textContent = '내려받아 적용하는 중...';
+    $('#btn-update-apply').hidden = true;
+    try {
+      const r = await fetch('/api/admin/update/apply', { method: 'POST', headers: { 'X-Admin-Token': token } });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.message || '적용 실패');
+      waitForServer(st, '적용했습니다.');
+    } catch (e) {
+      st.textContent = '적용하지 못했습니다: ' + e.message;
+      $('#btn-update-apply').hidden = false;
+    }
+  });
+
+  document.getElementById('btn-update-rollback').addEventListener('click', async () => {
+    if (!confirm('직전 버전으로 되돌릴까요?')) return;
+    const st = $('#update-state');
+    st.textContent = '되돌리는 중...';
+    try {
+      const r = await fetch('/api/admin/update/rollback', { method: 'POST', headers: { 'X-Admin-Token': token } });
+      if (!r.ok) throw new Error((await r.json()).message || '되돌리기 실패');
+      waitForServer(st, '되돌렸습니다.');
+    } catch (e) {
+      st.textContent = '되돌리지 못했습니다: ' + e.message;
+    }
   });
 
   document.getElementById('btn-reset-stats').addEventListener('click', async () => {

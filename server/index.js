@@ -7,6 +7,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const QRCode = require('qrcode');
+const AdmZip = require('adm-zip');
 
 // 프로젝트 폴더의 .env 파일을 읽는다 (있으면). 실제 환경변수가 우선.
 // 예: ADMIN_PASSWORD=비밀번호  /  CLOSING_TIME=18:00
@@ -620,6 +621,114 @@ app.post('/api/admin/special-days', (req, res) => {
   if (!token || !adminSessions.has(token)) return res.status(401).json({ error: 'unauthorized' });
   store.setSetting('specialDays', req.body?.enabled !== false);
   res.json({ ok: true });
+});
+
+// ---- 원격 업데이트 (GitHub) --------------------------------------------------
+// 저장소의 server/ · public/ 만 받아 덮어쓴다. .env 와 들판 데이터는 건드리지 않는다.
+const UPDATE_REPO = process.env.UPDATE_REPO || 'evenzest-afk/mybom-garden';
+const UPDATE_BRANCH = process.env.UPDATE_BRANCH || 'main';
+const ROOT_DIR = path.join(__dirname, '..');
+const VERSION_PATH = path.join(ROOT_DIR, 'data', 'version.json');
+const ROLLBACK_DIR = path.join(ROOT_DIR, 'data', 'rollback');
+
+function localVersion() {
+  try { return JSON.parse(require('fs').readFileSync(VERSION_PATH, 'utf8')); }
+  catch { return { sha: null, at: null }; }
+}
+
+/** 되돌리기용으로 현재 server/·public/ 을 통째로 복사해 둔다 */
+function saveRollback() {
+  const fs = require('fs');
+  fs.rmSync(ROLLBACK_DIR, { recursive: true, force: true });
+  for (const dir of ['server', 'public']) {
+    fs.cpSync(path.join(ROOT_DIR, dir), path.join(ROLLBACK_DIR, dir), { recursive: true });
+  }
+  fs.writeFileSync(path.join(ROLLBACK_DIR, 'version.json'), JSON.stringify(localVersion(), null, 2));
+}
+
+app.get('/api/admin/update/check', async (req, res) => {
+  const token = req.headers['x-admin-token'];
+  if (!token || !adminSessions.has(token)) return res.status(401).json({ error: 'unauthorized' });
+  try {
+    const r = await fetch(`https://api.github.com/repos/${UPDATE_REPO}/commits/${UPDATE_BRANCH}`,
+      { headers: { 'User-Agent': 'mybom-garden' }, signal: AbortSignal.timeout(10000) });
+    if (!r.ok) throw new Error('github ' + r.status);
+    const c = await r.json();
+    const cur = localVersion();
+    res.json({
+      current: cur.sha, currentAt: cur.at,
+      latest: c.sha,
+      message: (c.commit.message || '').split('\n')[0],
+      date: c.commit.committer.date,
+      updateAvailable: c.sha !== cur.sha,
+      canRollback: require('fs').existsSync(ROLLBACK_DIR),
+    });
+  } catch (e) {
+    res.status(502).json({ error: 'check-failed', message: e.message });
+  }
+});
+
+app.post('/api/admin/update/apply', async (req, res) => {
+  const token = req.headers['x-admin-token'];
+  if (!token || !adminSessions.has(token)) return res.status(401).json({ error: 'unauthorized' });
+  const fs = require('fs');
+  try {
+    const meta = await fetch(`https://api.github.com/repos/${UPDATE_REPO}/commits/${UPDATE_BRANCH}`,
+      { headers: { 'User-Agent': 'mybom-garden' }, signal: AbortSignal.timeout(10000) }).then((r) => r.json());
+    const zipRes = await fetch(`https://codeload.github.com/${UPDATE_REPO}/zip/refs/heads/${UPDATE_BRANCH}`,
+      { signal: AbortSignal.timeout(60000) });
+    if (!zipRes.ok) throw new Error('download ' + zipRes.status);
+    const zip = new AdmZip(Buffer.from(await zipRes.arrayBuffer()));
+    const entries = zip.getEntries();
+    if (!entries.length) throw new Error('빈 압축');
+    const base = entries[0].entryName.split('/')[0] + '/';
+
+    // 받은 내용이 온전한지 먼저 확인 (반쯤 적용되는 사고 방지)
+    const wanted = entries.filter((e) => !e.isDirectory)
+      .map((e) => e.entryName.slice(base.length))
+      .filter((n) => n.startsWith('server/') || n.startsWith('public/'));
+    if (!wanted.includes('server/index.js') || !wanted.includes('public/garden.html')) {
+      throw new Error('내려받은 파일이 온전하지 않습니다');
+    }
+
+    saveRollback();
+    for (const e of entries) {
+      if (e.isDirectory) continue;
+      const rel = e.entryName.slice(base.length);
+      if (!(rel.startsWith('server/') || rel.startsWith('public/'))) continue;
+      const dest = path.join(ROOT_DIR, rel);
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.writeFileSync(dest, e.getData());
+    }
+    fs.writeFileSync(VERSION_PATH, JSON.stringify(
+      { sha: meta.sha, at: new Date().toISOString(), message: (meta.commit.message || '').split('\n')[0] }, null, 2));
+
+    res.json({ ok: true, applied: meta.sha, restarting: true });
+    console.log('[업데이트] 적용 완료 — 재시작합니다:', meta.sha.slice(0, 7));
+    setTimeout(() => process.exit(0), 600); // 지킴이가 다시 띄운다
+  } catch (e) {
+    console.log('[업데이트] 실패:', e.message);
+    res.status(500).json({ error: 'apply-failed', message: e.message });
+  }
+});
+
+app.post('/api/admin/update/rollback', (req, res) => {
+  const token = req.headers['x-admin-token'];
+  if (!token || !adminSessions.has(token)) return res.status(401).json({ error: 'unauthorized' });
+  const fs = require('fs');
+  if (!fs.existsSync(ROLLBACK_DIR)) return res.status(404).json({ error: 'no-backup' });
+  try {
+    for (const dir of ['server', 'public']) {
+      fs.rmSync(path.join(ROOT_DIR, dir), { recursive: true, force: true });
+      fs.cpSync(path.join(ROLLBACK_DIR, dir), path.join(ROOT_DIR, dir), { recursive: true });
+    }
+    fs.copyFileSync(path.join(ROLLBACK_DIR, 'version.json'), VERSION_PATH);
+    res.json({ ok: true, restarting: true });
+    console.log('[업데이트] 직전 버전으로 되돌렸습니다 — 재시작합니다');
+    setTimeout(() => process.exit(0), 600);
+  } catch (e) {
+    res.status(500).json({ error: 'rollback-failed', message: e.message });
+  }
 });
 
 // 개발용 수동 마감 트리거 (관리자 토큰 필요)

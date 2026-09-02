@@ -1,0 +1,17 @@
+# 비밀 — 절대 올리지 않는다
+.env
+*.pem
+*.key
+cloudflared/
+
+# 운영 데이터 (병원 PC의 것이 진짜)
+data/garden.json
+data/backup/
+
+# 빌드/배포 산출물
+node_modules/
+*.zip
+qr-print.png
+
+# OS
+.DS_Store

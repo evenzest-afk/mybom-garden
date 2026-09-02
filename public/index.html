@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F1E8">
+<title>나의 봄</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+<main id="app">
+
+  <!-- 1. 인트로 — 전시 입장 -->
+  <section class="screen active" id="screen-intro">
+    <header class="plaque-head">
+      <span class="rule"></span>
+      <span class="plaque-sub">참여형 설치 · 대기실 들판</span>
+      <span class="rule"></span>
+    </header>
+    <div class="intro-body">
+      <h1 class="title">나의 봄</h1>
+      <p class="intro-desc">
+        이 들판은 이곳을 다녀간 사람들의<br>
+        마음으로 자라는 작품입니다.<br><br>
+        두 번의 선택으로 오늘의 꽃 한 송이를 얻고,<br>
+        벽면의 들판에 피워 주세요.
+      </p>
+      <div class="intro-mark" id="intro-mark" aria-hidden="true"></div>
+      <button class="btn-primary" id="btn-start">참여하기</button>
+      <p class="hint">약 30초 — 이름도, 기록도 남지 않습니다</p>
+    </div>
+    <footer class="plaque-foot">마음의 꽃은 피어 있다가 바람에 실려 떠납니다</footer>
+  </section>
+
+  <!-- 2. 질문 1: 마음의 날씨 -->
+  <section class="screen" id="screen-q1">
+    <div class="q-head">
+      <span class="q-step">첫 번째</span>
+      <h2>오늘, 마음의 날씨는<br>어떤가요?</h2>
+    </div>
+    <div class="options options-weather" id="q1-options">
+      <button class="opt" data-value="맑음">
+        <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="9"/><g class="rays"><line x1="24" y1="6" x2="24" y2="12"/><line x1="24" y1="36" x2="24" y2="42"/><line x1="6" y1="24" x2="12" y2="24"/><line x1="36" y1="24" x2="42" y2="24"/><line x1="11.3" y1="11.3" x2="15.5" y2="15.5"/><line x1="32.5" y1="32.5" x2="36.7" y2="36.7"/><line x1="36.7" y1="11.3" x2="32.5" y2="15.5"/><line x1="15.5" y1="32.5" x2="11.3" y2="36.7"/></g></svg>
+        <span>맑음</span>
+      </button>
+      <button class="opt" data-value="조금 흐림">
+        <svg viewBox="0 0 48 48"><circle cx="18" cy="18" r="7"/><line x1="18" y1="5" x2="18" y2="9"/><line x1="5" y1="18" x2="9" y2="18"/><line x1="8.8" y1="8.8" x2="11.6" y2="11.6"/><path d="M16 34 a7 7 0 0 1 7 -7 a8 8 0 0 1 15 2.5 a6 6 0 0 1 -1 11.5 h-15 a6.5 6.5 0 0 1 -6 -7 z"/></svg>
+        <span>조금 흐림</span>
+      </button>
+      <button class="opt" data-value="무거움">
+        <svg viewBox="0 0 48 48"><path d="M12 32 a8 8 0 0 1 8 -8 a9 9 0 0 1 17 3 a6.5 6.5 0 0 1 -1 13 h-17 a7 7 0 0 1 -7 -8 z"/></svg>
+        <span>무거움</span>
+      </button>
+      <button class="opt" data-value="힘듦">
+        <svg viewBox="0 0 48 48"><path d="M12 26 a8 8 0 0 1 8 -8 a9 9 0 0 1 17 3 a6.5 6.5 0 0 1 -1 13 h-17 a7 7 0 0 1 -7 -8 z"/><line x1="18" y1="38" x2="16" y2="44"/><line x1="26" y1="38" x2="24" y2="44"/><line x1="34" y1="38" x2="32" y2="44"/></svg>
+        <span>힘듦</span>
+      </button>
+      <button class="opt opt-wide" data-value="조용히">
+        <svg viewBox="0 0 48 48"><path d="M30 8 a16 16 0 1 0 10 28 a14 14 0 0 1 -10 -28 z"/><circle cx="36" cy="14" r="1" class="dot"/><circle cx="41" cy="21" r="1" class="dot"/></svg>
+        <span>조용히 있고 싶음</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- 3. 질문 2: 필요한 것 -->
+  <section class="screen" id="screen-q2">
+    <div class="q-head">
+      <span class="q-step">두 번째</span>
+      <h2>오늘의 나에게<br>필요한 것은?</h2>
+    </div>
+    <div class="options options-need" id="q2-options">
+      <button class="opt" data-value="쉼"><span class="need-word">쉼</span><span class="need-sub">잠시 내려놓기</span></button>
+      <button class="opt" data-value="용기"><span class="need-word">용기</span><span class="need-sub">한 걸음 내딛기</span></button>
+      <button class="opt" data-value="평온"><span class="need-word">평온</span><span class="need-sub">고요한 마음</span></button>
+      <button class="opt" data-value="자신감"><span class="need-word">자신감</span><span class="need-sub">나를 믿기</span></button>
+      <button class="opt" data-value="새로운 시작"><span class="need-word">새로운 시작</span><span class="need-sub">다시 피어나기</span></button>
+      <button class="opt" data-value="따뜻함"><span class="need-word">따뜻함</span><span class="need-sub">온기를 느끼기</span></button>
+    </div>
+  </section>
+
+  <!-- 4. 뽑기 연출 -->
+  <section class="screen screen-center" id="screen-draw">
+    <div class="seed-stage">
+      <div class="seed-glow"></div>
+      <div class="seed" id="seed">
+        <svg viewBox="0 0 60 72" aria-hidden="true">
+          <path d="M30 4 C 48 18, 52 42, 30 68 C 8 42, 12 18, 30 4 Z" fill="#A98963"/>
+          <path d="M30 4 C 44 20, 46 44, 30 68 C 24 44, 22 20, 30 4 Z" fill="#C6A87E"/>
+        </svg>
+      </div>
+      <p class="seed-caption" id="seed-caption">당신의 꽃을 찾고 있습니다</p>
+    </div>
+  </section>
+
+  <!-- 5. 결과 — 작품 카드 -->
+  <section class="screen" id="screen-result">
+    <div class="result-card" id="result-card">
+      <div class="card-inner">
+        <div class="result-rarity" id="result-rarity"></div>
+        <div class="result-flower" id="result-flower"></div>
+        <p class="result-label">오늘의 꽃</p>
+        <h2 class="result-name" id="result-name"></h2>
+        <p class="result-meaning" id="result-meaning"></p>
+        <div class="result-divider" aria-hidden="true"><span></span>❀<span></span></div>
+        <p class="result-message" id="result-message"></p>
+      </div>
+    </div>
+    <button class="btn-primary" id="btn-plant">들판에 심기</button>
+  </section>
+
+  <!-- 6. 심기 완료 -->
+  <section class="screen screen-center" id="screen-planted">
+    <div class="planted-box">
+      <div class="planted-icon" id="planted-mini"></div>
+      <p class="planted-name" id="planted-name"></p>
+      <p class="planted-meaning" id="planted-meaning"></p>
+      <h2>들판에 심었습니다</h2>
+      <p>고개를 들어 벽의 들판을 봐 주세요.<br>당신의 꽃이 피어나고 있습니다.</p>
+      <button class="btn-ghost" id="btn-window" hidden>이어서, 들판 보러 가기</button>
+      <p class="hint window-hint" id="window-hint" hidden>단 한 번 열리는 창이에요 —<br>닫으면 들판은 대기실 벽에서 만날 수 있어요</p>
+      <p class="hint">마음의 꽃은 피어 있다가<br>바람에 실려 떠납니다</p>
+    </div>
+  </section>
+
+  <!-- 이미 참여한 날 -->
+  <section class="screen screen-center" id="screen-already">
+    <div class="planted-box">
+      <div class="planted-icon">❀</div>
+      <h2>오늘의 꽃은<br>이미 피어 있습니다</h2>
+      <p>들판 어딘가에서 당신의 꽃이<br>바람을 쐬고 있을 거예요.<br>내일, 새로운 꽃을 만나요.</p>
+      <button class="btn-ghost" id="btn-again">그래도 한 송이 더 심기</button>
+    </div>
+  </section>
+
+</main>
+<script src="js/flower-svg.js"></script>
+<script src="js/mobile.js"></script>
+</body>
+</html>

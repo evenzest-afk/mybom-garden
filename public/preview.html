@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>나의 봄 — 꽃 스타일 프리뷰</title>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F1E8; --ink: #35302A; --ink-soft: #7C7466; --line: #D9D1BF; --gold: #B99B5A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Gowun Batang", Georgia, serif; background: var(--paper); color: var(--ink);
+    padding: 48px 32px 80px;
+  }
+  h1 { text-align: center; font-size: 26px; letter-spacing: 8px; margin-bottom: 6px; }
+  .sub { text-align: center; font-size: 12px; letter-spacing: 2px; color: var(--ink-soft); margin-bottom: 48px; font-family: sans-serif; }
+  .hero { display: flex; justify-content: center; gap: 36px; flex-wrap: wrap; margin-bottom: 26px; }
+  .frame {
+    background: #FBF9F3; border: 1px solid var(--line); padding: 10px;
+    box-shadow: 0 16px 36px rgba(90,75,45,.14);
+    width: 250px;
+  }
+  .frame-inner { border: 1px solid var(--line); padding: 18px 12px 20px; text-align: center; }
+  .frame svg { width: 170px; height: auto; }
+  .fname { font-size: 19px; font-weight: 700; letter-spacing: 3px; margin-top: 4px; }
+  .fmean { font-size: 12.5px; color: #5C7350; margin-top: 6px; letter-spacing: 1px; }
+  .variants { display: flex; justify-content: center; gap: 6px; margin-top: 12px; }
+  .variants svg { width: 44px; height: auto; }
+  .divider { display: flex; align-items: center; gap: 16px; max-width: 720px; margin: 56px auto 36px; color: var(--gold); font-size: 12px; }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 18px; max-width: 1100px; margin: 0 auto; }
+  .cell { text-align: center; padding: 10px 4px 12px; border: 1px solid transparent; }
+  .cell:hover { border-color: var(--line); background: #FBF9F3; }
+  .cell svg { width: 84px; height: auto; }
+  .cname { font-size: 13px; margin-top: 2px; }
+  .ctag { font-size: 10px; font-family: sans-serif; letter-spacing: 1px; color: var(--ink-soft); margin-top: 3px; }
+  .ctag.rare { color: #6D5A9E; } .ctag.epic { color: #96793D; }
+</style>
+</head>
+<body>
+<h1>나의 봄</h1>
+<p class="sub">꽃 일러스트 스타일 프리뷰 — 방향 확정용 3종</p>
+<div class="hero" id="hero"></div>
+<div class="divider">전체 카탈로그 42종</div>
+<div class="grid" id="grid"></div>
+<script src="js/flower-svg.js"></script>
+<script>
+(async function () {
+  const db = await fetch('/api/flowers').then(r => r.json());
+  const byId = Object.fromEntries(db.flowers.map(f => [f.id, f]));
+  const heroIds = ['cosmos', 'daisy', 'dandelion'];
+  const hero = document.getElementById('hero');
+  for (const id of heroIds) {
+    const f = byId[id];
+    const variants = f.palettes.map((_, i) =>
+      FlowerSVG.render(f, i, { seed: 400 + i })).join('');
+    hero.insertAdjacentHTML('beforeend', `
+      <div class="frame"><div class="frame-inner">
+        ${FlowerSVG.render(f, 0, { seed: 77 })}
+        <div class="fname">${f.name}</div>
+        <div class="fmean">꽃말 · ${f.meaning}</div>
+        <div class="variants">${variants}</div>
+      </div></div>`);
+  }
+  const tag = { common: '흔함', rare: '드묾', epic: '아주 드묾' };
+  const grid = document.getElementById('grid');
+  for (const f of db.flowers) {
+    grid.insertAdjacentHTML('beforeend', `
+      <div class="cell">
+        ${FlowerSVG.render(f, 0, { seed: 12345 })}
+        <div class="cname">${f.name}</div>
+        <div class="ctag ${f.rarity}">${tag[f.rarity]}${f.months ? ' · ' + f.months.join(',') + '월' : ''}</div>
+      </div>`);
+  }
+})();
+</script>
+</body>
+</html>

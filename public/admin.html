@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>나의 봄 — 관리</title>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #F5F1E8; --ink: #35302A; --soft: #7C7466; --line: #D9D1BF; --gold: #B99B5A; --green: #5C7350; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Gowun Batang", Georgia, serif; background: var(--paper); color: var(--ink);
+    min-height: 100vh; display: flex; justify-content: center; padding: 48px 20px;
+  }
+  .wrap { width: 100%; max-width: 760px; }
+  h1 { font-size: 22px; letter-spacing: 6px; margin-bottom: 4px; }
+  .sub { font-family: sans-serif; font-size: 11.5px; letter-spacing: 2px; color: var(--soft); margin-bottom: 36px; }
+  .panel { background: #FBF9F3; border: 1px solid var(--line); padding: 28px; }
+
+  /* 로그인 */
+  #login-form { display: flex; gap: 10px; max-width: 380px; }
+  #password {
+    flex: 1; padding: 12px 14px; border: 1px solid var(--line); background: #fff;
+    font-family: inherit; font-size: 15px; outline: none;
+  }
+  #password:focus { border-color: var(--gold); }
+  button {
+    padding: 12px 22px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    font-family: inherit; font-size: 14px; letter-spacing: 2px; cursor: pointer;
+  }
+  #login-error { color: #A0522D; font-size: 13px; margin-top: 12px; display: none; }
+
+  /* 통계 */
+  #stats { display: none; }
+  .total-line { font-size: 14.5px; color: var(--soft); margin-bottom: 24px; }
+  .total-line b { color: var(--ink); font-size: 18px; }
+  #chart { display: flex; align-items: flex-end; gap: 3px; height: 180px; border-bottom: 1px solid var(--line); padding-bottom: 0; margin-bottom: 8px; }
+  .bar { flex: 1; background: var(--green); opacity: .75; min-height: 1px; position: relative; }
+  .bar:hover { opacity: 1; }
+  .bar .tip {
+    display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: var(--paper); font-family: sans-serif; font-size: 11px;
+    padding: 3px 8px; white-space: nowrap; margin-bottom: 4px;
+  }
+  .bar:hover .tip { display: block; }
+  .axis { display: flex; justify-content: space-between; font-family: sans-serif; font-size: 10.5px; color: var(--soft); margin-bottom: 30px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 6px; border-bottom: 1px solid var(--line); }
+  th { font-family: sans-serif; font-size: 11px; letter-spacing: 1.5px; color: var(--soft); font-weight: 600; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.zero td { color: #B9B0A0; }
+  .note { margin-top: 26px; font-family: sans-serif; font-size: 11.5px; line-height: 1.8; color: var(--soft); }
+
+  .choices-block { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 26px; }
+  .choices-block h2 { font-size: 15px; letter-spacing: 3px; margin: 22px 0 12px; }
+  .choices-block h2 small { font-family: sans-serif; font-size: 11px; letter-spacing: 1px; color: var(--soft); font-weight: 400; margin-left: 8px; }
+  .table-scroll { overflow-x: auto; }
+  .choices-block td.num, .choices-block th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .choices-block td.dim { color: #C9C0AF; }
+  .choices-block th { white-space: nowrap; }
+
+  .settings { margin-top: 34px; border-top: 1px solid var(--line); padding-top: 26px; }
+  .settings h2 { font-size: 15px; letter-spacing: 3px; margin-bottom: 16px; }
+  .orient-row { display: flex; gap: 22px; flex-wrap: wrap; }
+  .orient-row label {
+    display: flex; align-items: center; gap: 7px; font-size: 14.5px; cursor: pointer;
+    padding: 8px 14px; border: 1px solid var(--line); background: #fff;
+  }
+  .orient-row label:has(input:checked) { border-color: var(--gold); background: #F8F4E9; }
+  .orient-row input { accent-color: var(--green); }
+  .orient-row small { font-family: sans-serif; font-size: 11px; color: var(--soft); }
+  .saved-msg { display: none; margin-top: 12px; font-size: 12.5px; color: var(--green); }
+  .weather-line { margin-top: 18px; font-family: sans-serif; font-size: 12px; color: var(--soft); }
+
+  .danger-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 26px; border-top: 1px dashed var(--line); padding-top: 22px; }
+  .setting-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 22px; }
+  .toggle { display: flex; align-items: center; gap: 8px; font-size: 14.5px; cursor: pointer; }
+  .toggle input { accent-color: var(--green); }
+  .toggle small { font-family: sans-serif; font-size: 11px; color: var(--soft); }
+  .btn-soft {
+    background: #fff; color: var(--ink); border: 1px solid var(--line);
+    padding: 9px 16px; font-size: 13px; letter-spacing: 1px;
+  }
+  .btn-soft:hover { border-color: var(--gold); background: #F8F4E9; }
+  .btn-danger {
+    background: transparent; color: #9C4A38; border: 1px solid #C89484;
+    padding: 10px 18px; font-size: 13px; letter-spacing: 1.5px;
+  }
+  .btn-danger:hover { background: #F7EAE5; }
+  .danger-note { font-family: sans-serif; font-size: 11.5px; color: var(--soft); max-width: 420px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>나의 봄</h1>
+  <p class="sub">관리 — 일자별 새로 핀 꽃</p>
+
+  <div class="panel" id="login-panel">
+    <form id="login-form">
+      <input type="password" id="password" placeholder="비밀번호" autocomplete="current-password">
+      <button type="submit">열기</button>
+    </form>
+    <p id="login-error">비밀번호가 맞지 않습니다.</p>
+  </div>
+
+  <div class="panel" id="stats">
+    <p class="total-line">최근 30일 동안 <b id="total">0</b>송이가 피었습니다.</p>
+    <div id="chart"></div>
+    <div class="axis"><span id="d-first"></span><span id="d-last"></span></div>
+    <table>
+      <thead><tr><th>날짜</th><th style="text-align:right">새로 핀 꽃</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="choices-block">
+      <h2>마음의 날씨 <small>날짜별 선택 수</small></h2>
+      <div class="table-scroll"><table id="weather-table"></table></div>
+      <h2>필요한 것 <small>날짜별 선택 수</small></h2>
+      <div class="table-scroll"><table id="need-table"></table></div>
+    </div>
+
+    <p class="note">
+      서버가 보관하는 것은 날짜별 집계 숫자뿐입니다. 개별 참여와 꽃, 선택한 마음은 서로
+      연결되지 않으며, 몇 시에 심었는지도 기록되지 않습니다.
+    </p>
+
+    <div class="settings">
+      <h2>사이니지 화면</h2>
+      <div class="orient-row" id="orient-row">
+        <label><input type="radio" name="orient" value="auto"> 자동 <small>화면 비율 따라</small></label>
+        <label><input type="radio" name="orient" value="portrait"> 세로</label>
+        <label><input type="radio" name="orient" value="landscape"> 가로</label>
+      </div>
+      <p class="saved-msg" id="orient-saved">저장되었습니다 — 사이니지에 바로 적용됩니다.</p>
+      <p class="weather-line" id="weather-line"></p>
+
+      <div class="setting-row">
+        <label class="toggle"><input type="checkbox" id="chk-special"> 특별한 날 이펙트 사용
+          <small>성탄·새해·벚꽃철 등 (data/special-days.json 에서 날짜 편집)</small></label>
+      </div>
+
+      <div class="setting-row">
+        <button type="button" class="btn-soft" id="btn-undo-last">방금 심긴 꽃 한 송이 되돌리기</button>
+        <button type="button" class="btn-soft" id="btn-undo-today">오늘 심긴 꽃 모두 지우기</button>
+        <span class="danger-note">장난이나 실수로 심긴 것을 지울 때 씁니다. 어떤 꽃인지는 화면에 표시하지 않습니다.</span>
+      </div>
+      <p class="saved-msg" id="undo-done"></p>
+
+      <div class="danger-row">
+        <button type="button" class="btn-danger" id="btn-reset-stats">통계 초기화</button>
+        <span class="danger-note">날짜별 꽃 수와 마음/바람 집계를 모두 지웁니다. 들판의 꽃은 그대로 둡니다. 되돌릴 수 없습니다.</span>
+      </div>
+      <p class="saved-msg" id="reset-done">통계가 초기화되었습니다.</p>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  let token = sessionStorage.getItem('bom-admin-token');
+
+  $('#login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const res = await fetch('/api/admin/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: $('#password').value }),
+    });
+    if (!res.ok) { $('#login-error').style.display = 'block'; return; }
+    token = (await res.json()).token;
+    sessionStorage.setItem('bom-admin-token', token);
+    loadStats();
+  });
+
+  function renderChoiceTable(el, days, options, key) {
+    const shown = days.slice().reverse().filter((d) => d.count > 0).slice(0, 14);
+    if (!shown.length) {
+      el.innerHTML = '<tbody><tr><td style="color:#B9B0A0">아직 집계된 참여가 없습니다.</td></tr></tbody>';
+      return;
+    }
+    const head = '<tr><th>날짜</th>' + options.map((o) => `<th class="num">${o}</th>`).join('') + '</tr>';
+    const rows = shown.map((d) => {
+      const cells = options.map((o) => {
+        const n = (d[key] && d[key][o]) || 0;
+        return `<td class="num ${n === 0 ? 'dim' : ''}">${n}</td>`;
+      }).join('');
+      return `<tr><td>${d.date}</td>${cells}</tr>`;
+    }).join('');
+    el.innerHTML = `<thead>${head}</thead><tbody>${rows}</tbody>`;
+  }
+
+  async function loadStats() {
+    const res = await fetch('/api/admin/stats', { headers: { 'X-Admin-Token': token } });
+    if (!res.ok) { sessionStorage.removeItem('bom-admin-token'); return; }
+    const { days, weatherChoices, needChoices } = await res.json();
+    $('#login-panel').style.display = 'none';
+    $('#stats').style.display = 'block';
+
+    const total = days.reduce((a, d) => a + d.count, 0);
+    $('#total').textContent = total;
+    const max = Math.max(1, ...days.map((d) => d.count));
+    $('#chart').innerHTML = days.map((d) =>
+      `<div class="bar" style="height:${(d.count / max) * 100}%">
+         <span class="tip">${d.date.slice(5)} · ${d.count}송이</span></div>`).join('');
+    $('#d-first').textContent = days[0].date;
+    $('#d-last').textContent = days[days.length - 1].date;
+    $('#rows').innerHTML = days.slice().reverse().map((d) =>
+      `<tr class="${d.count === 0 ? 'zero' : ''}"><td>${d.date}</td><td class="num">${d.count}</td></tr>`).join('');
+
+    renderChoiceTable(document.getElementById('weather-table'), days, weatherChoices || [], 'weather');
+    renderChoiceTable(document.getElementById('need-table'), days, needChoices || [], 'need');
+
+    loadDisplay();
+  }
+
+  const CAT_KO = { clear: '맑음', cloudy: '구름 조금', overcast: '흐림', rain: '비', snow: '눈' };
+
+  async function loadDisplay() {
+    const res = await fetch('/api/admin/display', { headers: { 'X-Admin-Token': token } });
+    if (!res.ok) return;
+    const { orientation, weather, specialDays } = await res.json();
+    document.getElementById('chk-special').checked = specialDays !== false;
+    const radio = document.querySelector(`input[name="orient"][value="${orientation}"]`);
+    if (radio) radio.checked = true;
+    if (weather && weather.updatedAt) {
+      const t = new Date(weather.updatedAt);
+      $('#weather-line').textContent =
+        `현재 날씨 반영: ${CAT_KO[weather.category] || weather.category}` +
+        (weather.tempC != null ? ` · ${weather.tempC}°C` : '') +
+        ` · 바람 ${weather.windKmh}km/h (${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')} 갱신)`;
+    } else {
+      $('#weather-line').textContent = '날씨 정보를 아직 받지 못했습니다 — 인터넷 연결을 확인하세요. (연결 없이도 들판은 정상 동작합니다)';
+    }
+  }
+
+  document.getElementById('orient-row').addEventListener('change', async (e) => {
+    if (e.target.name !== 'orient') return;
+    const res = await fetch('/api/admin/display', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Token': token },
+      body: JSON.stringify({ orientation: e.target.value }),
+    });
+    if (res.ok) {
+      const msg = $('#orient-saved');
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 2500);
+    }
+  });
+
+  document.getElementById('chk-special').addEventListener('change', async (e) => {
+    await fetch('/api/admin/special-days', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Token': token },
+      body: JSON.stringify({ enabled: e.target.checked }),
+    });
+  });
+
+  async function undoFlower(scope, label) {
+    const res = await fetch('/api/admin/undo-flower', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Token': token },
+      body: JSON.stringify({ scope }),
+    });
+    if (!res.ok) return;
+    const { removed } = await res.json();
+    const m = $('#undo-done');
+    m.textContent = removed ? `${label} — ${removed}송이를 지웠습니다.` : '지울 꽃이 없습니다.';
+    m.style.display = 'block';
+    setTimeout(() => { m.style.display = 'none'; }, 3000);
+  }
+  document.getElementById('btn-undo-last').addEventListener('click', () => undoFlower('last', '되돌리기'));
+  document.getElementById('btn-undo-today').addEventListener('click', () => {
+    if (confirm('오늘 심긴 꽃을 모두 지울까요? 되돌릴 수 없습니다.')) undoFlower('today', '오늘 정리');
+  });
+
+  document.getElementById('btn-reset-stats').addEventListener('click', async () => {
+    if (!confirm('통계를 초기화할까요?\n날짜별 꽃 수와 마음/바람 집계가 모두 지워지며 되돌릴 수 없습니다.\n(들판에 피어 있는 꽃은 그대로 둡니다)')) return;
+    const res = await fetch('/api/admin/reset-stats', {
+      method: 'POST', headers: { 'X-Admin-Token': token },
+    });
+    if (res.ok) {
+      const msg = $('#reset-done');
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 2500);
+      loadStats();
+    }
+  });
+
+  if (token) loadStats();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "my-bom",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["server/index.js"],
+      "port": 3000,
+      "autoPort": true,
+      "env": {
+        "PUBLIC_URL": "https://bom.bommind.co.kr"
+      }
+    }
+  ]
+}

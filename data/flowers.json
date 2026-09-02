@@ -1,0 +1,1424 @@
+{
+  "needs": [
+    "쉼",
+    "용기",
+    "평온",
+    "자신감",
+    "새로운 시작",
+    "따뜻함"
+  ],
+  "rarityWeights": {
+    "common": 70,
+    "rare": 25,
+    "epic": 5
+  },
+  "needBoost": 3,
+  "flowers": [
+    {
+      "id": "cosmos",
+      "name": "코스모스",
+      "meaning": "평온과 조화",
+      "message": "바람에 흔들려도 부러지지 않는 마음이에요.",
+      "rarity": "common",
+      "months": null,
+      "needs": [
+        "평온",
+        "쉼"
+      ],
+      "shape": {
+        "type": "daisy",
+        "petals": 8,
+        "len": 52,
+        "w": 24,
+        "centerR": 12,
+        "notch": true
+      },
+      "palettes": [
+        {
+          "petal": "#E7B2C9",
+          "petalDeep": "#D28DAE",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#F5E1EA",
+          "petalDeep": "#E5BDD1",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#C4A5CD",
+          "petalDeep": "#A683B3",
+          "center": "#D6B05D"
+        }
+      ]
+    },
+    {
+      "id": "daisy",
+      "name": "데이지",
+      "meaning": "희망과 순수",
+      "message": "작지만 또렷하게, 오늘의 희망이 피었어요.",
+      "rarity": "common",
+      "months": null,
+      "needs": [
+        "새로운 시작"
+      ],
+      "shape": {
+        "type": "daisy",
+        "petals": 14,
+        "len": 46,
+        "w": 13,
+        "centerR": 13
+      },
+      "palettes": [
+        {
+          "petal": "#FAFAFA",
+          "petalDeep": "#E6E2EB",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#FCEDF1",
+          "petalDeep": "#EDCED7",
+          "center": "#D5A65E"
+        }
+      ]
+    },
+    {
+      "id": "dandelion",
+      "name": "민들레",
+      "meaning": "행복과 감사",
+      "message": "어디서든 뿌리내리는 씩씩한 행복이에요.",
+      "rarity": "common",
+      "months": null,
+      "needs": [
+        "따뜻함",
+        "용기"
+      ],
+      "shape": {
+        "type": "pom",
+        "rings": 3,
+        "petals": 18,
+        "len": 40,
+        "centerR": 8
+      },
+      "palettes": [
+        {
+          "petal": "#E3C96D",
+          "petalDeep": "#D5A62A",
+          "center": "#CD9627"
+        },
+        {
+          "petal": "#ECDB9C",
+          "petalDeep": "#DAB85D",
+          "center": "#CFA044"
+        }
+      ]
+    },
+    {
+      "id": "violet",
+      "name": "제비꽃",
+      "meaning": "소박한 행복",
+      "message": "낮은 자리에서 피어도 충분히 예뻐요.",
+      "rarity": "common",
+      "months": null,
+      "needs": [
+        "쉼",
+        "평온"
+      ],
+      "shape": {
+        "type": "violet",
+        "len": 40
+      },
+      "palettes": [
+        {
+          "petal": "#988CC7",
+          "petalDeep": "#7A6DAE",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#B9AFDD",
+          "petalDeep": "#988CC7",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#FAFAFA",
+          "petalDeep": "#D8D3E9",
+          "center": "#DBBA66"
+        }
+      ]
+    },
+    {
+      "id": "pansy",
+      "name": "팬지",
+      "meaning": "마음의 여유",
+      "message": "잠시 생각에 잠겨도 괜찮은 하루예요.",
+      "rarity": "common",
+      "months": null,
+      "needs": [
+        "쉼"
+      ],
+      "shape": {
+        "type": "violet",
+        "len": 46,
+        "face": true
+      },
+      "palettes": [
+        {
+          "petal": "#887BBB",
+          "petalDeep": "#5E5093",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#D6B05D",
+          "petalDeep": "#B7873A",
+          "center": "#7A623E"
+        },
+        {
+          "petal": "#B87DA6",
+          "petalDeep": "#8F567E",
+          "center": "#DBBA66"
+        }
+      ]
+    },
+    {
+      "id": "tulip",
+      "name": "튤립",
+      "meaning": "배려와 새로운 시작",
+      "message": "봉오리는 열리는 순간을 알고 있어요.",
+      "rarity": "common",
+      "months": null,
+      "needs": [
+        "새로운 시작",
+        "따뜻함"
+      ],
+      "shape": {
+        "type": "tulip",
+        "len": 58,
+        "w": 44
+      },
+      "palettes": [
+        {
+          "petal": "#DE8A91",
+          "petalDeep": "#C36571",
+          "center": "#EDBBBE"
+        },
+        {
+          "petal": "#DBBA66",
+          "petalDeep": "#C49B46",
+          "center": "#EAD6A0"
+        },
+        {
+          "petal": "#E4ACC5",
+          "petalDeep": "#CB83A6",
+          "center": "#F1D1DF"
+        }
+      ]
+    },
+    {
+      "id": "forsythia",
+      "name": "개나리",
+      "meaning": "희망과 기대",
+      "message": "노란 불이 켜지면 봄이 오고 있다는 뜻이에요.",
+      "rarity": "common",
+      "months": [
+        3,
+        4
+      ],
+      "needs": [
+        "새로운 시작"
+      ],
+      "shape": {
+        "type": "star",
+        "petals": 4,
+        "len": 42,
+        "w": 20
+      },
+      "palettes": [
+        {
+          "petal": "#E3C96D",
+          "petalDeep": "#D3A828",
+          "center": "#CD9627"
+        },
+        {
+          "petal": "#E7D280",
+          "petalDeep": "#D1AE45",
+          "center": "#CD9627"
+        }
+      ]
+    },
+    {
+      "id": "rape-flower",
+      "name": "유채꽃",
+      "meaning": "명랑한 마음",
+      "message": "환한 기운은 옆 사람에게도 번져요.",
+      "rarity": "common",
+      "months": [
+        3,
+        4,
+        5
+      ],
+      "needs": [
+        "자신감"
+      ],
+      "shape": {
+        "type": "cluster",
+        "florets": 9,
+        "floretR": 12,
+        "spread": 30,
+        "petalsPer": 4
+      },
+      "palettes": [
+        {
+          "petal": "#E3CF6D",
+          "petalDeep": "#D5B329",
+          "center": "#C19B25"
+        },
+        {
+          "petal": "#EBDD94",
+          "petalDeep": "#D7BD54",
+          "center": "#C19B25"
+        }
+      ]
+    },
+    {
+      "id": "marguerite",
+      "name": "마거리트",
+      "meaning": "마음속의 믿음",
+      "message": "스스로를 믿는 마음이 하얗게 피었어요.",
+      "rarity": "common",
+      "months": null,
+      "needs": [
+        "평온",
+        "자신감"
+      ],
+      "shape": {
+        "type": "daisy",
+        "petals": 16,
+        "len": 48,
+        "w": 12,
+        "centerR": 14
+      },
+      "palettes": [
+        {
+          "petal": "#FAFAFA",
+          "petalDeep": "#E4E6ED",
+          "center": "#D6B05D"
+        },
+        {
+          "petal": "#F6EEDA",
+          "petalDeep": "#E4D6B2",
+          "center": "#CD9627"
+        }
+      ]
+    },
+    {
+      "id": "clover-flower",
+      "name": "토끼풀꽃",
+      "meaning": "행운과 약속",
+      "message": "동그란 행운 하나가 굴러왔어요.",
+      "rarity": "common",
+      "months": null,
+      "needs": [
+        "따뜻함"
+      ],
+      "shape": {
+        "type": "pom",
+        "rings": 3,
+        "petals": 14,
+        "len": 34,
+        "centerR": 6
+      },
+      "palettes": [
+        {
+          "petal": "#FAFAFA",
+          "petalDeep": "#DFE7D8",
+          "center": "#CEDCC2"
+        },
+        {
+          "petal": "#EFD9E2",
+          "petalDeep": "#E0BAC9",
+          "center": "#D4B0C0"
+        }
+      ]
+    },
+    {
+      "id": "babys-breath",
+      "name": "안개꽃",
+      "meaning": "맑은 마음과 감사",
+      "message": "작은 점들이 모여 뿌연 아침 안개처럼 빛나요.",
+      "rarity": "common",
+      "months": null,
+      "needs": [
+        "따뜻함",
+        "평온"
+      ],
+      "shape": {
+        "type": "cluster",
+        "florets": 16,
+        "floretR": 9,
+        "spread": 38,
+        "petalsPer": 5
+      },
+      "palettes": [
+        {
+          "petal": "#FAFAFA",
+          "petalDeep": "#E5E5EC",
+          "center": "#E8E7CB"
+        },
+        {
+          "petal": "#F6E6ED",
+          "petalDeep": "#E8CCDA",
+          "center": "#F0E1E8"
+        }
+      ]
+    },
+    {
+      "id": "freesia",
+      "name": "프리지아",
+      "meaning": "응원과 새 출발",
+      "message": "당신의 시작을 조용히 응원하고 있어요.",
+      "rarity": "common",
+      "months": null,
+      "needs": [
+        "새로운 시작",
+        "용기"
+      ],
+      "shape": {
+        "type": "funnel",
+        "blooms": 3,
+        "len": 40,
+        "w": 30
+      },
+      "palettes": [
+        {
+          "petal": "#E3C96D",
+          "petalDeep": "#D2A42F",
+          "center": "#F2E7BC"
+        },
+        {
+          "petal": "#FAFAFA",
+          "petalDeep": "#E4E0D8",
+          "center": "#F1E8C7"
+        },
+        {
+          "petal": "#C7AFD7",
+          "petalDeep": "#A386BA",
+          "center": "#E7D9EF"
+        }
+      ]
+    },
+    {
+      "id": "morning-glory",
+      "name": "나팔꽃",
+      "meaning": "기쁜 소식",
+      "message": "좋은 소식은 아침처럼 반드시 와요.",
+      "rarity": "common",
+      "months": [
+        7,
+        8,
+        9
+      ],
+      "needs": [
+        "새로운 시작"
+      ],
+      "shape": {
+        "type": "funnel",
+        "blooms": 1,
+        "len": 56,
+        "w": 56,
+        "star": true
+      },
+      "palettes": [
+        {
+          "petal": "#7E8CC2",
+          "petalDeep": "#5966A3",
+          "center": "#FAFAFA"
+        },
+        {
+          "petal": "#9E81BC",
+          "petalDeep": "#7B5B9E",
+          "center": "#FAFAFA"
+        },
+        {
+          "petal": "#D696AD",
+          "petalDeep": "#B76D8C",
+          "center": "#FAFAFA"
+        }
+      ]
+    },
+    {
+      "id": "moss-rose",
+      "name": "채송화",
+      "meaning": "천진난만한 순수",
+      "message": "해가 나면 활짝 웃는 법을 아는 꽃이에요.",
+      "rarity": "common",
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "needs": [
+        "따뜻함"
+      ],
+      "shape": {
+        "type": "cup",
+        "petals": 5,
+        "len": 40,
+        "w": 30
+      },
+      "palettes": [
+        {
+          "petal": "#E091A5",
+          "petalDeep": "#C56A84",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#E6B27A",
+          "petalDeep": "#D18F4D",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#E3CF6D",
+          "petalDeep": "#D3A828",
+          "center": "#CD9627"
+        }
+      ]
+    },
+    {
+      "id": "china-aster",
+      "name": "과꽃",
+      "meaning": "믿는 마음",
+      "message": "믿어 주는 마음 하나면 충분할 때가 있어요.",
+      "rarity": "common",
+      "months": [
+        8,
+        9,
+        10
+      ],
+      "needs": [
+        "평온"
+      ],
+      "shape": {
+        "type": "daisy",
+        "petals": 20,
+        "len": 44,
+        "w": 11,
+        "centerR": 12
+      },
+      "palettes": [
+        {
+          "petal": "#A394CC",
+          "petalDeep": "#8374B1",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#D59AB4",
+          "petalDeep": "#B97494",
+          "center": "#DBBA66"
+        }
+      ]
+    },
+    {
+      "id": "zinnia",
+      "name": "백일홍",
+      "meaning": "변치 않는 마음",
+      "message": "백 일 동안 피는 꽃처럼, 오래가는 마음이에요.",
+      "rarity": "common",
+      "months": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "needs": [
+        "평온",
+        "따뜻함"
+      ],
+      "shape": {
+        "type": "layered",
+        "layers": 3,
+        "petals": 10,
+        "len": 46,
+        "w": 18,
+        "centerR": 10
+      },
+      "palettes": [
+        {
+          "petal": "#DE8A91",
+          "petalDeep": "#C36571",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#E3A56D",
+          "petalDeep": "#CE8543",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#E4ACC5",
+          "petalDeep": "#CB83A6",
+          "center": "#DBBA66"
+        }
+      ]
+    },
+    {
+      "id": "sweet-pea",
+      "name": "스위트피",
+      "meaning": "설레는 출발",
+      "message": "나비를 닮은 꽃잎이 출발 신호를 보내요.",
+      "rarity": "common",
+      "months": [
+        4,
+        5,
+        6
+      ],
+      "needs": [
+        "새로운 시작"
+      ],
+      "shape": {
+        "type": "butterfly",
+        "len": 44
+      },
+      "palettes": [
+        {
+          "petal": "#E4ACC5",
+          "petalDeep": "#CB83A6",
+          "center": "#F3D4E2"
+        },
+        {
+          "petal": "#B9AFDD",
+          "petalDeep": "#988CC7",
+          "center": "#DDD7EE"
+        }
+      ]
+    },
+    {
+      "id": "coreopsis",
+      "name": "금계국",
+      "meaning": "상쾌한 기분",
+      "message": "길가를 온통 환하게 만드는 씩씩함이에요.",
+      "rarity": "common",
+      "months": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "needs": [
+        "자신감"
+      ],
+      "shape": {
+        "type": "daisy",
+        "petals": 8,
+        "len": 48,
+        "w": 22,
+        "centerR": 11,
+        "notch": true
+      },
+      "palettes": [
+        {
+          "petal": "#E1BD60",
+          "petalDeep": "#D09933",
+          "center": "#85612E"
+        },
+        {
+          "petal": "#E7CD80",
+          "petalDeep": "#D2A949",
+          "center": "#85612E"
+        }
+      ]
+    },
+    {
+      "id": "bellflower",
+      "name": "초롱꽃",
+      "meaning": "감사하는 마음",
+      "message": "작은 초롱불이 마음 한 켠을 밝혀요.",
+      "rarity": "common",
+      "months": [
+        6,
+        7,
+        8
+      ],
+      "needs": [
+        "따뜻함",
+        "쉼"
+      ],
+      "shape": {
+        "type": "bell",
+        "bells": 2,
+        "len": 44,
+        "w": 30
+      },
+      "palettes": [
+        {
+          "petal": "#B0A6D5",
+          "petalDeep": "#8D82B9",
+          "center": "#D8D2EB"
+        },
+        {
+          "petal": "#F2EFF7",
+          "petalDeep": "#DBD6E8",
+          "center": "#EBE7F3"
+        }
+      ]
+    },
+    {
+      "id": "rudbeckia",
+      "name": "루드베키아",
+      "meaning": "영원한 행복",
+      "message": "한여름 햇살을 그대로 닮은 꽃이에요.",
+      "rarity": "common",
+      "months": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "needs": [
+        "따뜻함",
+        "자신감"
+      ],
+      "shape": {
+        "type": "daisy",
+        "petals": 12,
+        "len": 50,
+        "w": 15,
+        "centerR": 15
+      },
+      "palettes": [
+        {
+          "petal": "#E1BD60",
+          "petalDeep": "#D09933",
+          "center": "#60452F"
+        },
+        {
+          "petal": "#E6B27A",
+          "petalDeep": "#D18F4D",
+          "center": "#60452F"
+        }
+      ]
+    },
+    {
+      "id": "petunia",
+      "name": "페튜니아",
+      "meaning": "함께라서 편안한 마음",
+      "message": "곁에 있는 것만으로 편안해지는 존재가 있어요.",
+      "rarity": "common",
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "needs": [
+        "평온",
+        "쉼"
+      ],
+      "shape": {
+        "type": "funnel",
+        "blooms": 1,
+        "len": 50,
+        "w": 50
+      },
+      "palettes": [
+        {
+          "petal": "#D696AD",
+          "petalDeep": "#B76D8C",
+          "center": "#F6E7ED"
+        },
+        {
+          "petal": "#988CC7",
+          "petalDeep": "#7A6DAE",
+          "center": "#EBE7F6"
+        },
+        {
+          "petal": "#FAFAFA",
+          "petalDeep": "#E1DDE9",
+          "center": "#F3F1E9"
+        }
+      ]
+    },
+    {
+      "id": "hydrangea",
+      "name": "수국",
+      "meaning": "진심 어린 감사",
+      "message": "작은 진심들이 모여 커다란 송이가 되었어요.",
+      "rarity": "rare",
+      "months": [
+        6,
+        7
+      ],
+      "needs": [
+        "따뜻함"
+      ],
+      "shape": {
+        "type": "cluster",
+        "florets": 30,
+        "floretR": 13,
+        "spread": 28,
+        "petalsPer": 4
+      },
+      "palettes": [
+        {
+          "petal": "#9EAFDA",
+          "petalDeep": "#798BBD",
+          "center": "#E9EDFB"
+        },
+        {
+          "petal": "#DDADC4",
+          "petalDeep": "#C388A7",
+          "center": "#F9EBF2"
+        },
+        {
+          "petal": "#B0A6D5",
+          "petalDeep": "#8D82B9",
+          "center": "#EEEAF6"
+        }
+      ]
+    },
+    {
+      "id": "magnolia",
+      "name": "목련",
+      "meaning": "고귀한 마음",
+      "message": "겨울을 다 지나온 마음은 이렇게 환해요.",
+      "rarity": "rare",
+      "months": [
+        3,
+        4
+      ],
+      "needs": [
+        "자신감",
+        "새로운 시작"
+      ],
+      "shape": {
+        "type": "magnolia",
+        "petals": 6,
+        "len": 54,
+        "w": 26
+      },
+      "palettes": [
+        {
+          "petal": "#FBF8F4",
+          "petalDeep": "#CBB9BE",
+          "center": "#DDCB93"
+        },
+        {
+          "petal": "#EFD5E3",
+          "petalDeep": "#C79FB8",
+          "center": "#DDCB93"
+        }
+      ]
+    },
+    {
+      "id": "lavender",
+      "name": "라벤더",
+      "meaning": "평온과 치유",
+      "message": "숨을 깊게 들이쉬면 보랏빛 향이 나요.",
+      "rarity": "rare",
+      "months": null,
+      "needs": [
+        "평온",
+        "쉼"
+      ],
+      "shape": {
+        "type": "spike",
+        "florets": 12,
+        "len": 64,
+        "w": 18
+      },
+      "palettes": [
+        {
+          "petal": "#A394CC",
+          "petalDeep": "#8374B1",
+          "center": "#CAC1E5"
+        },
+        {
+          "petal": "#8A7EBB",
+          "petalDeep": "#6B5CA0",
+          "center": "#B9AFDD"
+        }
+      ]
+    },
+    {
+      "id": "peony",
+      "name": "작약",
+      "meaning": "수줍은 용기",
+      "message": "수줍게 시작해도 결국 가장 크게 피어나요.",
+      "rarity": "rare",
+      "months": [
+        5,
+        6
+      ],
+      "needs": [
+        "용기"
+      ],
+      "shape": {
+        "type": "layered",
+        "layers": 4,
+        "petals": 8,
+        "len": 52,
+        "w": 30,
+        "centerR": 8,
+        "round": true
+      },
+      "palettes": [
+        {
+          "petal": "#E8B2C0",
+          "petalDeep": "#D38BA2",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#DE9393",
+          "petalDeep": "#C56F75",
+          "center": "#DBBA66"
+        },
+        {
+          "petal": "#F9ECEF",
+          "petalDeep": "#EBCFD8",
+          "center": "#DBBA66"
+        }
+      ]
+    },
+    {
+      "id": "lisianthus",
+      "name": "리시안셔스",
+      "meaning": "변치 않는 마음",
+      "message": "쉽게 시들지 않는 마음도 있다는 걸 알려줘요.",
+      "rarity": "rare",
+      "months": null,
+      "needs": [
+        "평온"
+      ],
+      "shape": {
+        "type": "layered",
+        "layers": 3,
+        "petals": 6,
+        "len": 48,
+        "w": 32,
+        "centerR": 7,
+        "round": true
+      },
+      "palettes": [
+        {
+          "petal": "#F0ECF6",
+          "petalDeep": "#D6CEE5",
+          "center": "#E5E0BE"
+        },
+        {
+          "petal": "#C1B2DA",
+          "petalDeep": "#9E88BF",
+          "center": "#E5E0BE"
+        }
+      ]
+    },
+    {
+      "id": "ranunculus",
+      "name": "라넌큘러스",
+      "meaning": "빛나는 매력",
+      "message": "겹겹이 쌓인 매력, 오늘의 주인공이에요.",
+      "rarity": "rare",
+      "months": [
+        3,
+        4,
+        5
+      ],
+      "needs": [
+        "자신감"
+      ],
+      "shape": {
+        "type": "layered",
+        "layers": 5,
+        "petals": 9,
+        "len": 44,
+        "w": 24,
+        "centerR": 6,
+        "round": true
+      },
+      "palettes": [
+        {
+          "petal": "#E6B27A",
+          "petalDeep": "#D18F4D",
+          "center": "#A97C3B"
+        },
+        {
+          "petal": "#E8B2C0",
+          "petalDeep": "#D38BA2",
+          "center": "#B97D92"
+        },
+        {
+          "petal": "#ECD79C",
+          "petalDeep": "#D6B45D",
+          "center": "#B69646"
+        }
+      ]
+    },
+    {
+      "id": "chamomile",
+      "name": "카모마일",
+      "meaning": "역경 속의 힘",
+      "message": "밟혀도 다시 서는 작은 꽃의 힘이에요.",
+      "rarity": "rare",
+      "months": null,
+      "needs": [
+        "용기"
+      ],
+      "shape": {
+        "type": "daisy",
+        "petals": 12,
+        "len": 38,
+        "w": 11,
+        "centerR": 13,
+        "domed": true
+      },
+      "palettes": [
+        {
+          "petal": "#FAFAFA",
+          "petalDeep": "#E4E6ED",
+          "center": "#D6B05D"
+        },
+        {
+          "petal": "#F8F8EF",
+          "petalDeep": "#E3E2D3",
+          "center": "#CFA044"
+        }
+      ]
+    },
+    {
+      "id": "lily-of-the-valley",
+      "name": "은방울꽃",
+      "meaning": "다시 찾아온 행복",
+      "message": "행복은 방울방울, 다시 돌아오고 있어요.",
+      "rarity": "rare",
+      "months": [
+        5
+      ],
+      "needs": [
+        "새로운 시작",
+        "따뜻함"
+      ],
+      "shape": {
+        "type": "bell",
+        "bells": 4,
+        "len": 22,
+        "w": 16,
+        "arc": true
+      },
+      "palettes": [
+        {
+          "petal": "#FDFDFB",
+          "petalDeep": "#B9C9AC",
+          "center": "#EEF3E7"
+        }
+      ]
+    },
+    {
+      "id": "narcissus",
+      "name": "수선화",
+      "meaning": "나를 아끼는 마음",
+      "message": "오늘은 나를 조금 더 아껴 주세요.",
+      "rarity": "rare",
+      "months": [
+        2,
+        3,
+        4
+      ],
+      "needs": [
+        "자신감",
+        "쉼"
+      ],
+      "shape": {
+        "type": "daffodil",
+        "petals": 6,
+        "len": 44,
+        "w": 20,
+        "trumpetR": 14
+      },
+      "palettes": [
+        {
+          "petal": "#F5EFCD",
+          "petalDeep": "#E0D49E",
+          "center": "#D29A32"
+        },
+        {
+          "petal": "#FAFAFA",
+          "petalDeep": "#E8E5D9",
+          "center": "#DBBA66"
+        }
+      ]
+    },
+    {
+      "id": "hyacinth",
+      "name": "히아신스",
+      "meaning": "한결같은 마음",
+      "message": "계절이 바뀌어도 변하지 않는 마음이 있어요.",
+      "rarity": "rare",
+      "months": [
+        3,
+        4
+      ],
+      "needs": [
+        "평온"
+      ],
+      "shape": {
+        "type": "spike",
+        "florets": 14,
+        "len": 60,
+        "w": 30,
+        "starFloret": true
+      },
+      "palettes": [
+        {
+          "petal": "#8F9ACB",
+          "petalDeep": "#6B76AB",
+          "center": "#C7CEE8"
+        },
+        {
+          "petal": "#DDADC4",
+          "petalDeep": "#C388A7",
+          "center": "#F0D9E5"
+        },
+        {
+          "petal": "#FAFAFA",
+          "petalDeep": "#E1DFE9",
+          "center": "#EEECF4"
+        }
+      ]
+    },
+    {
+      "id": "stock-flower",
+      "name": "스토크",
+      "meaning": "영원한 아름다움",
+      "message": "은은한 향처럼 오래 남는 아름다움이에요.",
+      "rarity": "rare",
+      "months": [
+        3,
+        4,
+        5
+      ],
+      "needs": [
+        "따뜻함"
+      ],
+      "shape": {
+        "type": "spike",
+        "florets": 10,
+        "len": 58,
+        "w": 30,
+        "roundFloret": true
+      },
+      "palettes": [
+        {
+          "petal": "#DDADC4",
+          "petalDeep": "#C388A7",
+          "center": "#F6E7EF"
+        },
+        {
+          "petal": "#C1B2DA",
+          "petalDeep": "#9E88BF",
+          "center": "#EBE5F4"
+        }
+      ]
+    },
+    {
+      "id": "delphinium",
+      "name": "델피니움",
+      "meaning": "당신을 행복하게",
+      "message": "하늘 한 조각을 데려와 당신 곁에 두었어요.",
+      "rarity": "rare",
+      "months": [
+        5,
+        6,
+        7
+      ],
+      "needs": [
+        "따뜻함"
+      ],
+      "shape": {
+        "type": "spike",
+        "florets": 12,
+        "len": 62,
+        "w": 28,
+        "starFloret": true
+      },
+      "palettes": [
+        {
+          "petal": "#83A1CF",
+          "petalDeep": "#5B7AB2",
+          "center": "#DCE5F4"
+        },
+        {
+          "petal": "#ABBCDF",
+          "petalDeep": "#8298C7",
+          "center": "#E6ECF7"
+        }
+      ]
+    },
+    {
+      "id": "gladiolus",
+      "name": "글라디올러스",
+      "meaning": "굳센 마음",
+      "message": "곧게 선 줄기처럼 단단한 하루가 되기를.",
+      "rarity": "rare",
+      "months": [
+        7,
+        8,
+        9
+      ],
+      "needs": [
+        "용기"
+      ],
+      "shape": {
+        "type": "spike",
+        "florets": 7,
+        "len": 64,
+        "w": 36,
+        "funnelFloret": true
+      },
+      "palettes": [
+        {
+          "petal": "#DE8A91",
+          "petalDeep": "#C36571",
+          "center": "#F4D9DC"
+        },
+        {
+          "petal": "#E3A56D",
+          "petalDeep": "#CE8543",
+          "center": "#F5E0CB"
+        }
+      ]
+    },
+    {
+      "id": "sunflower",
+      "name": "해바라기",
+      "meaning": "밝은 긍정",
+      "message": "해를 따라 도는 커다란 긍정이에요.",
+      "rarity": "rare",
+      "months": [
+        7,
+        8,
+        9
+      ],
+      "needs": [
+        "자신감",
+        "용기"
+      ],
+      "shape": {
+        "type": "daisy",
+        "petals": 18,
+        "len": 44,
+        "w": 14,
+        "centerR": 22,
+        "seedCenter": true
+      },
+      "palettes": [
+        {
+          "petal": "#E1BD60",
+          "petalDeep": "#D09933",
+          "center": "#6C4E35"
+        }
+      ]
+    },
+    {
+      "id": "gerbera",
+      "name": "거베라",
+      "meaning": "희망과 전진",
+      "message": "앞으로 한 걸음, 그거면 충분해요.",
+      "rarity": "rare",
+      "months": null,
+      "needs": [
+        "용기",
+        "새로운 시작"
+      ],
+      "shape": {
+        "type": "daisy",
+        "petals": 22,
+        "len": 48,
+        "w": 11,
+        "centerR": 14,
+        "innerRing": true
+      },
+      "palettes": [
+        {
+          "petal": "#DE8A91",
+          "petalDeep": "#C36571",
+          "center": "#7A4B50"
+        },
+        {
+          "petal": "#E3A56D",
+          "petalDeep": "#CE8543",
+          "center": "#85612E"
+        },
+        {
+          "petal": "#E4ACC5",
+          "petalDeep": "#CB83A6",
+          "center": "#885A6C"
+        }
+      ]
+    },
+    {
+      "id": "cherry-blossom",
+      "name": "벚꽃",
+      "meaning": "마음의 아름다움",
+      "message": "잠깐이라서 더 눈부신 순간이 있어요.",
+      "rarity": "rare",
+      "months": [
+        4
+      ],
+      "needs": [
+        "새로운 시작",
+        "따뜻함"
+      ],
+      "shape": {
+        "type": "cup",
+        "petals": 5,
+        "len": 48,
+        "w": 34,
+        "notch": true,
+        "branch": true
+      },
+      "palettes": [
+        {
+          "petal": "#F4D8E2",
+          "petalDeep": "#E5B7CB",
+          "center": "#D58196"
+        },
+        {
+          "petal": "#F8E7ED",
+          "petalDeep": "#EDCCD9",
+          "center": "#D58196"
+        }
+      ]
+    },
+    {
+      "id": "evening-primrose",
+      "name": "달맞이꽃",
+      "meaning": "말없는 기다림",
+      "message": "밤에만 피는 꽃도 있어요. 당신의 시간은 옵니다.",
+      "rarity": "epic",
+      "months": null,
+      "needs": [
+        "쉼",
+        "평온"
+      ],
+      "shape": {
+        "type": "cup",
+        "petals": 4,
+        "len": 46,
+        "w": 36,
+        "glow": true
+      },
+      "palettes": [
+        {
+          "petal": "#F1E7B3",
+          "petalDeep": "#DDC876",
+          "center": "#D29A32"
+        }
+      ]
+    },
+    {
+      "id": "edelweiss",
+      "name": "에델바이스",
+      "meaning": "소중한 기억과 용기",
+      "message": "높은 곳의 바람을 견딘 꽃이 건네는 용기예요.",
+      "rarity": "epic",
+      "months": null,
+      "needs": [
+        "용기"
+      ],
+      "shape": {
+        "type": "star",
+        "petals": 7,
+        "len": 42,
+        "w": 28,
+        "fuzzy": true
+      },
+      "palettes": [
+        {
+          "petal": "#F7F7F1",
+          "petalDeep": "#DCDCD2",
+          "center": "#E5E0BE"
+        }
+      ]
+    },
+    {
+      "id": "blue-rose",
+      "name": "푸른 장미",
+      "meaning": "기적",
+      "message": "없다고들 했지만, 여기 피어 있어요.",
+      "rarity": "epic",
+      "months": null,
+      "needs": [
+        "새로운 시작",
+        "용기"
+      ],
+      "shape": {
+        "type": "layered",
+        "layers": 5,
+        "petals": 7,
+        "len": 46,
+        "w": 28,
+        "centerR": 5,
+        "round": true
+      },
+      "palettes": [
+        {
+          "petal": "#90A4D8",
+          "petalDeep": "#6273B0",
+          "center": "#414D83"
+        }
+      ]
+    },
+    {
+      "id": "four-leaf-clover",
+      "name": "네잎클로버",
+      "meaning": "커다란 행운",
+      "message": "십만 분의 일의 행운이 당신에게 왔어요.",
+      "rarity": "epic",
+      "months": null,
+      "needs": [
+        "따뜻함"
+      ],
+      "shape": {
+        "type": "clover",
+        "leaves": 4,
+        "len": 40
+      },
+      "palettes": [
+        {
+          "petal": "#86B67A",
+          "petalDeep": "#5E9553",
+          "center": "#BCD6AE"
+        }
+      ]
+    },
+    {
+      "id": "adonis",
+      "name": "복수초",
+      "meaning": "영원한 행복",
+      "message": "눈 속에서도 피는 꽃이 있다는 것, 잊지 마세요.",
+      "rarity": "epic",
+      "months": [
+        1,
+        2,
+        3
+      ],
+      "needs": [
+        "용기",
+        "새로운 시작"
+      ],
+      "shape": {
+        "type": "cup",
+        "petals": 8,
+        "len": 42,
+        "w": 22,
+        "glow": true
+      },
+      "palettes": [
+        {
+          "petal": "#E3C96D",
+          "petalDeep": "#D3A828",
+          "center": "#A97C3B"
+        }
+      ]
+    }
+  ]
+}

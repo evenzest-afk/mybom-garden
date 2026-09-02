@@ -1,0 +1,420 @@
+/* 나의 봄 — 사이니지 들판 (1920×1080 기준, 갤러리 설치 작품 톤) */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #101216; }
+body { cursor: none; font-family: "Gowun Batang", "Apple Myungjo", Georgia, serif; }
+
+#stage { position: absolute; inset: 0; overflow: hidden; transition: --lean 2s ease; }
+
+/* ---------- 하늘과 빛 ---------- */
+#sky { position: absolute; inset: 0; transition: background 4s linear; }
+#sun-glow {
+  position: absolute; width: 46vw; height: 46vw; border-radius: 50%;
+  pointer-events: none; transition: opacity 6s linear, background 6s linear;
+  transform: translate(-50%, -50%);
+  filter: blur(10px);
+}
+#light-warm, #light-night { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 8s linear; }
+#light-warm { mix-blend-mode: soft-light; }
+#light-night { background: linear-gradient(180deg, rgba(18, 22, 40, .85), rgba(24, 26, 44, .55)); }
+
+/* ---------- 구름 ---------- */
+#clouds { position: absolute; inset: 0 0 30% 0; pointer-events: none; overflow: hidden; }
+.cloud {
+  position: absolute; left: 0;
+  /* 실루엣은 JS가 여러 덩어리의 radial-gradient로 만든다 (구름마다 다른 모양) */
+  animation: cloud-drift linear infinite;
+  will-change: transform;
+  opacity: .72;
+}
+/* 화면 밖 왼쪽에서 시작해 오른쪽 밖으로 완전히 빠져나간다 */
+@keyframes cloud-drift {
+  from { transform: translateX(calc(-1 * var(--cw, 420px))); }
+  to { transform: translateX(100vw); }
+}
+
+/* ---------- 언덕과 들판 ---------- */
+#hill-far {
+  position: absolute; left: -12%; width: 75%; bottom: 59.5%; height: 11%;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: linear-gradient(180deg, #AEBFA3, #9CB18F);
+  opacity: .8;
+}
+#hill-mid {
+  position: absolute; right: -18%; width: 82%; bottom: 59%; height: 8.5%;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: linear-gradient(180deg, #A3B894, #90A981);
+  opacity: .9;
+}
+#field {
+  position: absolute; left: -3%; right: -3%; bottom: 0; height: 61.5%;
+  border-radius: 50% 50% 0 0 / 3.5% 2.5% 0 0;
+  background: linear-gradient(180deg, #96B283 0%, #83A570 34%, #6E9560 100%);
+}
+/* 들판 위 은은한 결 — 빛 웅덩이, 풀빛 띠, 작은 풀숲 점 */
+#field::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background:
+    linear-gradient(180deg, rgba(240, 240, 200, .16) 0%, transparent 9%),
+    radial-gradient(46% 15% at 22% 20%, rgba(120, 150, 100, .35), transparent 75%),
+    radial-gradient(52% 17% at 78% 34%, rgba(116, 148, 96, .32), transparent 75%),
+    radial-gradient(44% 14% at 40% 52%, rgba(255, 250, 214, .13), transparent 70%),
+    radial-gradient(60% 22% at 65% 74%, rgba(58, 92, 54, .2), transparent 75%);
+}
+#field::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background-image:
+    radial-gradient(3px 5px at 12% 24%, rgba(70, 105, 66, .5), transparent 100%),
+    radial-gradient(4px 6px at 31% 15%, rgba(70, 105, 66, .42), transparent 100%),
+    radial-gradient(3px 5px at 47% 27%, rgba(70, 105, 66, .48), transparent 100%),
+    radial-gradient(4px 6px at 64% 18%, rgba(70, 105, 66, .4), transparent 100%),
+    radial-gradient(3px 5px at 81% 25%, rgba(70, 105, 66, .5), transparent 100%),
+    radial-gradient(4px 7px at 93% 16%, rgba(70, 105, 66, .38), transparent 100%),
+    radial-gradient(3px 5px at 21% 8%, rgba(70, 105, 66, .4), transparent 100%),
+    radial-gradient(3px 5px at 55% 7%, rgba(70, 105, 66, .45), transparent 100%),
+    radial-gradient(3px 6px at 72% 9%, rgba(70, 105, 66, .4), transparent 100%);
+  background-size: 340px 260px;
+  background-repeat: repeat;
+  opacity: .55;
+}
+
+/* ---------- 전경 풀 ---------- */
+#grass {
+  position: absolute; left: 0; right: 0; bottom: -2px; width: 100%; height: 22%;
+  pointer-events: none;
+}
+#grass-ground {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 9%;
+  background: linear-gradient(180deg, transparent, rgba(46, 76, 44, .55));
+  pointer-events: none;
+}
+.blade { transform-origin: bottom center; animation: blade-sway ease-in-out infinite alternate; }
+@keyframes blade-sway {
+  from { transform: rotate(calc((-2.4deg + var(--lean, 0deg)) * var(--wind, 1))); }
+  to { transform: rotate(calc((2.6deg + var(--lean, 0deg)) * var(--wind, 1))); }
+}
+
+/* ---------- 꽃 ---------- */
+#flowers { position: absolute; inset: 0; }
+.flower {
+  position: absolute;
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+  /* 날짜가 바뀌어 중경으로 물러날 때 천천히 이동·축소되도록 */
+  transition: filter 8s ease, opacity 8s ease, height 8s ease, width 8s ease, top 8s ease;
+  will-change: transform;
+}
+.flower svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.flower .sway {
+  height: 100%;
+  transform-origin: 50% 92%;
+  animation: flower-sway ease-in-out infinite alternate;
+}
+@keyframes flower-sway {
+  from { transform: rotate(calc((-1.6deg + var(--lean, 0deg)) * var(--wind, 1))); }
+  to { transform: rotate(calc((1.8deg + var(--lean, 0deg)) * var(--wind, 1))); }
+}
+
+/* 개화 연출 */
+.flower.blooming .sway { animation: none; }
+.flower.blooming svg {
+  animation: bloom-up 2.6s cubic-bezier(.22, 1.12, .36, 1) both;
+  transform-origin: 50% 96%;
+}
+@keyframes bloom-up {
+  0% { opacity: 0; transform: scale(.06); }
+  55% { opacity: 1; }
+  78% { transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* 씨앗 낙하 */
+.seed-mote {
+  position: absolute; width: 10px; height: 10px; border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, #F2E3B2, #C9A84C);
+  box-shadow: 0 0 14px 4px rgba(232, 210, 140, .75);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.bloom-ring {
+  position: absolute; border-radius: 50%;
+  border: 1.5px solid rgba(240, 222, 160, .8);
+  transform: translate(-50%, -50%) scale(.2); opacity: 1;
+  pointer-events: none;
+  animation: ring-out 1.6s ease-out forwards;
+}
+@keyframes ring-out {
+  to { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+.bloom-ring.epic { border-color: rgba(246, 214, 120, .95); box-shadow: 0 0 30px rgba(240, 210, 120, .5); }
+
+/* 마감: 바람에 실려 떠나기 */
+.flower.leaving {
+  animation: fly-away var(--fly-dur, 7s) ease-in var(--fly-delay, 0s) forwards;
+}
+@keyframes fly-away {
+  0% { opacity: 1; }
+  12% { transform: translateX(-50%) rotate(-4deg); }
+  100% {
+    transform: translate(calc(-50% + 46vw), -78vh) rotate(34deg) scale(.55);
+    opacity: 0;
+  }
+}
+
+/* ---------- 떠다니는 입자 ---------- */
+#drift { position: absolute; inset: 0; pointer-events: none; }
+.mote {
+  position: absolute; border-radius: 50% 46% 52% 48%;
+  background: rgba(250, 240, 220, .8);
+  animation: mote-float linear infinite;
+  opacity: 0;
+}
+@keyframes mote-float {
+  0% { transform: translate(0, 0) rotate(0); opacity: 0; }
+  12% { opacity: .75; }
+  85% { opacity: .55; }
+  100% { transform: translate(28vw, -50vh) rotate(300deg); opacity: 0; }
+}
+
+/* 바람이 지나갈 때 흩날리는 꽃잎 — 방향(--dir)과 회전(--spin)은 JS가 정한다 */
+.gust-petal {
+  position: absolute;
+  border-radius: 60% 40% 55% 45%;
+  opacity: 0;
+  animation: gust-cross linear forwards;
+}
+@keyframes gust-cross {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  9%   { opacity: var(--peak, .85); }
+  50%  { transform: translate(calc(var(--dir) * 55vw), var(--midy, -7vh)) rotate(calc(var(--spin, 400deg) * .5)); }
+  86%  { opacity: var(--peak, .85); }
+  100% { transform: translate(calc(var(--dir) * 124vw), var(--endy, -15vh)) rotate(var(--spin, 400deg)); opacity: 0; }
+}
+/* 이따금 부는 소용돌이 바람 — 앞으로 갔다 되감기듯 돌며 흘러간다 */
+.gust-petal.swirl { animation-name: gust-swirl; }
+@keyframes gust-swirl {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  10%  { opacity: var(--peak, .85); }
+  28%  { transform: translate(calc(var(--dir) * 26vw), -11vh) rotate(200deg); }
+  42%  { transform: translate(calc(var(--dir) * 31vw), 1vh) rotate(330deg); }
+  68%  { transform: translate(calc(var(--dir) * 72vw), -13vh) rotate(560deg); }
+  100% { transform: translate(calc(var(--dir) * 126vw), -5vh) rotate(820deg); opacity: 0; }
+}
+
+/* ---------- 들판의 손님 (나비·벌·잠자리·참새·제비·반딧불이) ---------- */
+.creature {
+  position: absolute; pointer-events: none;
+  offset-rotate: auto;
+}
+.creature svg { width: 100%; height: 100%; display: block; }
+.creature .wing { transform-origin: 50% 55%; animation: flap ease-in-out infinite alternate; }
+@keyframes flap {
+  from { transform: scaleY(1) scaleX(1); }
+  to { transform: scaleY(.45) scaleX(.9); }
+}
+/* 반딧불이는 날갯짓 없이 천천히 깜박인다 */
+.creature.firefly { offset-rotate: 0deg; filter: drop-shadow(0 0 6px rgba(246, 233, 168, .9)); }
+.creature.firefly .glow-dot { animation: firefly-blink 2.6s ease-in-out infinite; }
+@keyframes firefly-blink {
+  0%, 100% { opacity: .25; }
+  45% { opacity: 1; }
+}
+
+/* ---------- 날씨 ---------- */
+#weather-wash { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 6s linear, background 6s linear; }
+body.w-cloudy #weather-wash { background: rgba(150, 156, 165, .1); opacity: 1; }
+body.w-overcast #weather-wash { background: rgba(128, 134, 146, .2); opacity: 1; }
+body.w-rain #weather-wash { background: rgba(112, 122, 140, .18); opacity: 1; }
+body.w-snow #weather-wash { background: rgba(190, 196, 208, .16); opacity: 1; }
+
+/* 흐릴수록 구름이 더 많고 또렷해진다 (순서 중요: extra 규칙이 뒤에 와야 적용됨) */
+body.w-cloudy .cloud { opacity: .85; }
+body.w-overcast .cloud, body.w-rain .cloud, body.w-snow .cloud { opacity: .95; }
+.cloud-extra { opacity: 0; transition: opacity 8s linear; }
+body.w-cloudy .cloud-extra, body.w-overcast .cloud-extra,
+body.w-rain .cloud-extra, body.w-snow .cloud-extra { opacity: .8; }
+body.w-cloudy #sun-glow { opacity: .55; }
+body.w-overcast #sun-glow, body.w-rain #sun-glow, body.w-snow #sun-glow { opacity: .25; }
+
+/* 비 오는 날 들판은 살짝 촉촉하게 (우울하지 않게 초록 유지) */
+body.w-rain #field { filter: saturate(.92) brightness(.96); }
+body.w-overcast #field { filter: saturate(.9); }
+
+#weather-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.rain-drop {
+  position: absolute; top: -40px; width: 2px;
+  background: linear-gradient(180deg, transparent, rgba(215, 225, 245, .95));
+  border-radius: 2px;
+  transform: rotate(9deg);
+  animation: rain-fall linear infinite;
+}
+@keyframes rain-fall {
+  from { transform: translate(0, -4vh) rotate(9deg); }
+  to { transform: translate(-6vw, 108vh) rotate(9deg); }
+}
+.snow-flake {
+  position: absolute; top: -12px; border-radius: 50%;
+  background: rgba(252, 252, 250, .9);
+  filter: blur(.4px);
+  animation: snow-fall linear infinite;
+}
+@keyframes snow-fall {
+  0% { transform: translate(0, -4vh); }
+  25% { transform: translate(2.2vw, 24vh); }
+  50% { transform: translate(-1.4vw, 52vh); }
+  75% { transform: translate(2vw, 79vh); }
+  100% { transform: translate(-.6vw, 108vh); }
+}
+
+/* ---------- 세로(포트레이트) 구도 ---------- */
+/* 세로 사이니지: 하늘을 높게, 들판을 깊게 — 족자에 담긴 들판 */
+body.portrait #field { height: 66%; border-radius: 50% 50% 0 0 / 2.2% 1.8% 0 0; }
+body.portrait #hill-far { bottom: 64%; height: 7.5%; width: 95%; left: -18%; }
+body.portrait #hill-mid { bottom: 63.5%; height: 6%; width: 100%; right: -24%; }
+body.portrait #clouds { inset: 0 0 40% 0; }
+body.portrait #label { top: 36px; left: 34px; }
+body.portrait #label h1 { font-size: 40px; letter-spacing: 12px; }
+body.portrait #label p { font-size: 19px; }
+body.portrait #grass-ground { height: 7%; }
+body.portrait #caption { font-size: 30px; letter-spacing: 5px; bottom: 26px; padding: 0 30px; }
+
+/* ---------- 라벨과 캡션 ---------- */
+#label {
+  position: absolute; top: 44px; left: 56px; color: rgba(52, 46, 38, .88);
+  border-left: 1px solid rgba(80, 70, 55, .4); padding-left: 20px;
+  transition: color 6s linear, border-color 6s linear;
+}
+#label h1 { font-size: 44px; font-weight: 700; letter-spacing: 14px; margin-bottom: 12px; }
+#label p { font-size: 21px; letter-spacing: 3.5px; opacity: .75; }
+body.dark #label { color: rgba(238, 232, 218, .82); border-color: rgba(238, 232, 218, .3); }
+
+#caption {
+  position: absolute; bottom: 26px; left: 0; right: 0; text-align: center;
+  font-size: 34px; letter-spacing: 6px;
+  color: rgba(250, 247, 240, .92);
+  text-shadow: 0 1px 8px rgba(28, 40, 24, .65), 0 0 2px rgba(28, 40, 24, .4);
+  transition: color 6s linear;
+}
+body.dark #caption { color: rgba(240, 235, 224, .85); }
+
+/* ---------- 환자 일회용 창문 모드 ---------- */
+body.guest #qr-card { display: none !important; }
+body.guest { cursor: auto; }
+
+/* 방금 심은 내 꽃 — 잠시 은은하게 빛난다 */
+.flower.mine svg { filter: drop-shadow(0 0 16px rgba(238, 216, 150, .95)); transition: filter 2.5s ease; }
+
+#window-farewell {
+  position: fixed; inset: 0; z-index: 9000;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  background: radial-gradient(120% 90% at 50% 30%, #FAF7F0 0%, #F5F1E8 55%, #ECE5D5 100%);
+  opacity: 0; pointer-events: none;
+  transition: opacity 6s ease;
+}
+#window-farewell.show { opacity: 1; pointer-events: auto; }
+#window-farewell.instant { transition: opacity .8s ease; }
+.farewell-box { max-width: 320px; padding: 0 30px; color: #4A4238; }
+.farewell-mark { font-size: 30px; color: #B99B5A; margin-bottom: 20px; }
+#farewell-text { font-size: 19px; line-height: 1.75; letter-spacing: 1.5px; word-break: keep-all; }
+.farewell-sub { margin-top: 16px; font-size: 13.5px; color: #8C8172; letter-spacing: 1px; }
+
+/* ---------- 특별한 날 ---------- */
+#special-layer { position: absolute; inset: 0; pointer-events: none; }
+
+/* 들판 가장자리에 켜지는 작은 불빛 (성탄) */
+.sp-light {
+  position: absolute; width: 9px; height: 9px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #FFF3C4, #F0B429);
+  box-shadow: 0 0 12px 4px rgba(246, 200, 100, .55);
+  animation: sp-twinkle ease-in-out infinite alternate;
+}
+@keyframes sp-twinkle { from { opacity: .35; transform: scale(.85); } to { opacity: 1; transform: scale(1.1); } }
+
+/* 밤하늘의 큰 별 */
+.sp-star {
+  position: absolute; width: 60px; height: 60px;
+  background:
+    radial-gradient(circle, rgba(255,250,225,.95) 0 8%, rgba(255,250,225,0) 60%),
+    conic-gradient(from 0deg, transparent 0 43%, rgba(255,250,225,.75) 45% 55%, transparent 57% 93%, rgba(255,250,225,.75) 95% 100%);
+  filter: blur(.4px);
+  animation: sp-twinkle 3.2s ease-in-out infinite alternate;
+}
+
+/* 보름달 */
+.sp-moon {
+  position: absolute; width: 110px; height: 110px; border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, #FBF6E4, #E8DFC0 70%, #D9CFAC);
+  box-shadow: 0 0 60px 18px rgba(250, 244, 214, .35);
+}
+
+/* 붉은 해돋이 (새해) */
+#special-layer .sp-sunrise {
+  position: absolute; inset: 0;
+  background: radial-gradient(70% 45% at 50% 62%, rgba(255, 186, 130, .38), transparent 70%);
+  animation: sp-breathe 9s ease-in-out infinite alternate;
+}
+@keyframes sp-breathe { from { opacity: .55; } to { opacity: 1; } }
+
+/* 들판이 잠시 환해지는 축복 */
+.sp-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 40% at 50% 70%, rgba(255, 248, 214, .3), transparent 72%);
+  animation: sp-glow-pulse 14s ease-in-out infinite;
+}
+@keyframes sp-glow-pulse { 0%, 100% { opacity: 0; } 45%, 60% { opacity: 1; } }
+
+/* 특별한 날 한 줄 문구 */
+#special-msg {
+  position: absolute; left: 0; right: 0; bottom: 58px; text-align: center;
+  font-size: 30px; letter-spacing: 5px;
+  color: rgba(250, 247, 240, .92);
+  text-shadow: 0 1px 8px rgba(28, 40, 24, .6);
+  opacity: 0; transition: opacity 3s ease;
+}
+#special-msg.show { opacity: 1; }
+
+/* 아주 드묾 꽃이 필 때 — 들판 전체가 잠시 숨을 고른다 */
+#stage.epic-moment #field { filter: brightness(1.06); transition: filter 1.2s ease; }
+
+/* ---------- 시연 모드 ---------- */
+#demo-label {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  z-index: 9500; padding: 18px 34px; text-align: center;
+  background: rgba(251, 249, 243, .9);
+  border: 1px solid rgba(185, 155, 90, .5);
+  font-size: 26px; letter-spacing: 3px; color: #35302A;
+  opacity: 0; transition: opacity .6s ease;
+  box-shadow: 0 10px 30px rgba(40, 36, 26, .2);
+}
+#demo-label.show { animation: demo-label-cycle 7s ease forwards; }
+@keyframes demo-label-cycle {
+  0% { opacity: 0; } 8%, 34% { opacity: 1; } 60%, 100% { opacity: 0; }
+}
+/* 시연에서는 하늘이 빠르게 바뀐다 */
+body.demo #sky { transition: background 1.4s linear; }
+body.demo #light-warm, body.demo #light-night { transition: opacity 1.4s linear; }
+body.demo #sun-glow { transition: opacity 1.4s linear, background 1.4s linear; }
+body.demo #weather-wash { transition: opacity 1.4s linear, background 1.4s linear; }
+
+/* ---------- 참여용 QR — 안개처럼 스며드는 형태 ---------- */
+#qr-card {
+  position: absolute; right: 44px; top: 38px; z-index: 3000;
+  text-align: center;
+}
+/* QR 뒤로 부드럽게 번지는 빛 웅덩이 (QR 자체 배경 + 여백은 SVG가 가진 채로 바깥만 흐려짐) */
+#qr-card::before {
+  content: ""; position: absolute; inset: -6px;
+  background: rgba(251, 249, 243, .8);
+  border-radius: 24px;
+  filter: blur(10px);
+  z-index: -1;
+}
+#qr-img { width: 128px; height: 128px; margin: 0 auto; }
+#qr-img svg { display: block; width: 100%; height: 100%; border-radius: 10px; }
+.qr-caption {
+  margin-top: 10px; font-size: 16px; letter-spacing: 1.5px;
+  color: rgba(74, 66, 56, .78);
+  transition: color 6s linear;
+}
+body.dark #qr-card::before { background: rgba(251, 249, 243, .8); }
+body.dark .qr-caption { color: rgba(58, 51, 43, .85); }
+body.portrait #qr-card { right: 28px; top: 30px; }

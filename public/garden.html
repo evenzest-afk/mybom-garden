@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>나의 봄 — 들판</title>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/garden.css">
+</head>
+<body>
+<div id="stage">
+  <!-- 하늘 (시간대별 빛) -->
+  <div id="sky"></div>
+  <div id="sun-glow"></div>
+  <div id="clouds"></div>
+
+  <!-- 들판 -->
+  <div id="hill-far"></div>
+  <div id="hill-mid"></div>
+  <div id="field"></div>
+
+  <!-- 꽃이 피는 층 -->
+  <div id="flowers"></div>
+
+  <!-- 전경 풀 -->
+  <div id="grass-ground"></div>
+  <svg id="grass" preserveAspectRatio="none"></svg>
+
+  <!-- 떠다니는 꽃잎/빛 입자 -->
+  <div id="drift"></div>
+
+  <!-- 특별한 날 -->
+  <div id="special-layer"></div>
+  <p id="special-msg"></p>
+
+  <!-- 날씨 -->
+  <div id="weather-particles"></div>
+  <div id="weather-wash"></div>
+
+  <!-- 시간대 빛 오버레이 -->
+  <div id="light-warm"></div>
+  <div id="light-night"></div>
+
+  <!-- 작품 라벨 -->
+  <header id="label">
+    <h1>나의 봄</h1>
+    <p>이곳을 다녀간 사람들의 마음으로 자라는 들판</p>
+  </header>
+  <footer id="caption">마음의 꽃은 피어 있다가 바람에 실려 떠납니다</footer>
+
+  <!-- 환자 일회용 창문이 닫힐 때 -->
+  <div id="window-farewell">
+    <div class="farewell-box">
+      <div class="farewell-mark">❀</div>
+      <p id="farewell-text">들판은 이곳에서 계속 자랍니다</p>
+      <p class="farewell-sub">내일, 새로운 꽃으로 만나요</p>
+    </div>
+  </div>
+
+  <!-- 참여용 QR 카드 -->
+  <aside id="qr-card" hidden>
+    <div id="qr-img" role="img" aria-label="참여용 QR 코드"></div>
+    <p class="qr-caption">카메라로 비추면 꽃을 심을 수 있어요</p>
+  </aside>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/flower-svg.js"></script>
+<script src="js/garden.js"></script>
+</body>
+</html>

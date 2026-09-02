@@ -1,0 +1,65 @@
+{
+  "_설명": "when: 'MM-DD' 또는 'MM-DD~MM-DD'(기간), 'YYYY-MM-DD'(그 해만). effects는 아래 목록 중 선택.",
+  "_효과목록": ["snow(눈)", "lights(들판 가장자리 불빛)", "star(밤하늘 큰 별)", "moon(보름달)", "sunrise(붉은 해돋이)", "petals(꽃잎 흩날림)", "glow(들판 전체가 잠시 환해짐)"],
+  "days": [
+    {
+      "id": "christmas",
+      "name": "성탄",
+      "when": ["12-24~12-26"],
+      "effects": ["snow", "lights", "star"],
+      "message": "따뜻한 성탄 보내세요",
+      "enabled": true
+    },
+    {
+      "id": "newyear",
+      "name": "새해 첫날",
+      "when": ["01-01"],
+      "effects": ["sunrise", "glow"],
+      "message": "새해에도 당신의 봄이 오기를",
+      "enabled": true
+    },
+    {
+      "id": "cherry",
+      "name": "벚꽃철",
+      "when": ["04-01~04-12"],
+      "effects": ["petals"],
+      "message": null,
+      "enabled": true
+    },
+    {
+      "id": "childrens-day",
+      "name": "어린이날",
+      "when": ["05-05"],
+      "effects": ["petals", "glow"],
+      "message": null,
+      "enabled": true
+    },
+    {
+      "id": "chuseok",
+      "name": "추석",
+      "when": [],
+      "effects": ["moon"],
+      "message": "풍성한 한가위 되세요",
+      "enabled": true,
+      "_메모": "음력이라 해마다 날짜가 다릅니다. 예: [\"2026-09-25\"] 처럼 그 해 날짜를 넣어 주세요."
+    },
+    {
+      "id": "seollal",
+      "name": "설날",
+      "when": [],
+      "effects": ["glow"],
+      "message": "새해 복 많이 받으세요",
+      "enabled": true,
+      "_메모": "음력이라 해마다 날짜가 다릅니다. 예: [\"2027-02-06\"] 처럼 그 해 날짜를 넣어 주세요."
+    },
+    {
+      "id": "anniversary",
+      "name": "개원기념일",
+      "when": [],
+      "effects": ["glow", "petals"],
+      "message": null,
+      "enabled": true,
+      "_메모": "예: [\"03-15\"] 처럼 넣으면 매년 그날에 나타납니다."
+    }
+  ]
+}

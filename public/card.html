@@ -12,22 +12,22 @@
          display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
   .card { width:148mm; height:210mm; background:var(--paper); padding:9mm;
           box-shadow:0 12px 40px rgba(0,0,0,.3); }
-  .inner { border:1px solid var(--line); height:100%; padding:12mm 10mm;
+  .inner { border:1px solid var(--line); height:100%; padding:9mm 8mm;
            display:flex; flex-direction:column; align-items:center; text-align:center; }
   .kicker { font-family:sans-serif; font-size:9pt; letter-spacing:3.5px; color:var(--soft); }
-  .rule { width:34mm; height:1px; background:var(--line); margin:5mm 0; }
-  h1 { font-size:30pt; letter-spacing:11px; text-indent:11px; font-weight:700; }
-  .lead { font-size:11pt; line-height:2.1; color:var(--soft); margin-top:7mm; word-break:keep-all; }
-  .mark { width:34mm; margin:7mm 0 5mm; }
+  .rule { width:30mm; height:1px; background:var(--line); margin:4mm 0; }
+  h1 { font-size:26pt; letter-spacing:9px; text-indent:9px; font-weight:700; }
+  .lead { font-size:10pt; line-height:1.9; color:var(--soft); margin-top:5mm; word-break:keep-all; }
+  .mark { width:25mm; margin:5mm 0 4mm; }
   .mark svg { width:100%; height:auto; display:block; }
-  .qr { width:44mm; height:44mm; border:1px solid var(--line); padding:2.5mm; background:#fff; }
+  .qr { width:40mm; height:40mm; border:1px solid var(--line); padding:2mm; background:#fff; }
   .qr svg { width:100%; height:100%; display:block; }
-  .qr-label { font-family:sans-serif; font-size:9pt; letter-spacing:1.5px; color:var(--soft); margin-top:3.5mm; }
-  .steps { display:flex; gap:6mm; margin-top:7mm; }
+  .qr-label { font-family:sans-serif; font-size:8.5pt; line-height:1.6; letter-spacing:1px; color:var(--soft); margin-top:3mm; }
+  .steps { display:flex; gap:5mm; margin-top:5mm; }
   .step { flex:1; }
-  .step b { display:block; font-size:10pt; color:var(--gold); margin-bottom:1.5mm; }
-  .step span { font-size:9.5pt; color:var(--soft); line-height:1.7; }
-  .foot { margin-top:auto; font-size:9.5pt; letter-spacing:1.5px; color:var(--soft); }
+  .step b { display:block; font-size:9.5pt; color:var(--gold); margin-bottom:1mm; }
+  .step span { font-size:9.5pt; color:var(--soft); line-height:1.6; word-break:keep-all; white-space:nowrap; }
+  .foot { margin-top:auto; padding-top:4mm; font-size:9pt; letter-spacing:1px; color:var(--soft); }
   .print-btn { position:fixed; top:18px; right:18px; padding:10px 18px; background:var(--ink);
                color:var(--paper); border:0; font-family:inherit; font-size:13px; letter-spacing:2px; cursor:pointer; }
   @media print { body { background:#fff; padding:0; } .card { box-shadow:none; } .print-btn { display:none; } }
@@ -48,9 +48,9 @@
   <p class="qr-label">휴대폰 카메라로 비춰 주세요<br>
     <span style="color:#5C7350">이름도 기록도 남지 않습니다 · 사진은 찍히지 않아요</span></p>
   <div class="steps">
-    <div class="step"><b>하나</b><span>오늘 마음의<br>날씨 고르기</span></div>
-    <div class="step"><b>둘</b><span>지금 나에게<br>필요한 것</span></div>
-    <div class="step"><b>셋</b><span>꽃을 받아<br>들판에 심기</span></div>
+    <div class="step"><b>하나</b><span>마음의 날씨</span></div>
+    <div class="step"><b>둘</b><span>필요한 것</span></div>
+    <div class="step"><b>셋</b><span>들판에 심기</span></div>
   </div>
   <p class="foot">마음의 꽃은 피어 있다가 바람에 실려 떠납니다</p>
 </div></div>

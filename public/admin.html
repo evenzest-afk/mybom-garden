@@ -28,7 +28,8 @@
     padding: 12px 22px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
     font-family: inherit; font-size: 14px; letter-spacing: 2px; cursor: pointer;
   }
-  #login-error { color: #A0522D; font-size: 13px; margin-top: 12px; display: none; }
+  #login-error { color: #A0522D; font-size: 13px; margin-top: 12px; display: none; line-height: 1.7; }
+  #login-error a { color: #5C7350; }
 
   /* 통계 */
   #stats { display: none; }
@@ -178,16 +179,35 @@
   const $ = (s) => document.querySelector(s);
   let token = sessionStorage.getItem('bom-admin-token');
 
+  function showLoginError(html) {
+    const el = $('#login-error');
+    el.innerHTML = html;
+    el.style.display = 'block';
+  }
+
   $('#login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const res = await fetch('/api/admin/login', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: $('#password').value }),
-    });
-    if (!res.ok) { $('#login-error').style.display = 'block'; return; }
-    token = (await res.json()).token;
-    sessionStorage.setItem('bom-admin-token', token);
-    loadStats();
+    $('#login-error').style.display = 'none';
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: $('#password').value }),
+      });
+      // Cloudflare Access 가 가로채면 JSON 대신 로그인 페이지(HTML)가 돌아온다
+      const ct = res.headers.get('content-type') || '';
+      if (!ct.includes('application/json')) {
+        showLoginError('Cloudflare 인증이 한 번 더 필요합니다.<br>' +
+          '<a href="/api/admin/ping" target="_blank" rel="noopener">여기를 눌러 인증</a>한 뒤, ' +
+          '이 화면으로 돌아와 다시 로그인해 주세요.');
+        return;
+      }
+      if (!res.ok) { showLoginError('비밀번호가 맞지 않습니다.'); return; }
+      token = (await res.json()).token;
+      sessionStorage.setItem('bom-admin-token', token);
+      loadStats();
+    } catch (err) {
+      showLoginError('연결하지 못했습니다: ' + err.message);
+    }
   });
 
   function renderChoiceTable(el, days, options, key) {

@@ -333,6 +333,17 @@ app.get('/api/qr', (_req, res) => {
 
 const adminSessions = new Set();
 
+// Cloudflare Access 인증을 트리거/확인하는 간단한 문. 토큰이 필요 없다.
+// (관리 API 경로가 Access 로 보호될 때, 브라우저가 그 경로의 인증을 받게 하는 용도)
+app.get('/api/admin/ping', (_req, res) => {
+  res.type('html').send(`<!doctype html><meta charset="utf-8">
+    <title>인증 확인</title>
+    <body style="font-family:system-ui;background:#F5F1E8;color:#35302A;display:flex;
+      align-items:center;justify-content:center;height:100vh;margin:0;text-align:center">
+    <div><p style="font-size:20px">인증이 확인되었습니다.</p>
+    <p style="color:#7C7466">이 창을 닫고 관리 화면에서 다시 로그인해 주세요.</p></div>`);
+});
+
 app.post('/api/admin/login', (req, res) => {
   const { password } = req.body || {};
   if (password !== ADMIN_PASSWORD) {

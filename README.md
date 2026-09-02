@@ -238,6 +238,21 @@ open -a "Google Chrome" --args --kiosk --noerrdialogs --disable-session-crashed-
 
 `/card.html`을 열고 인쇄 버튼을 누르면 A5 크기로 출력된다 (QR 자동 삽입).
 
+## 원격 업데이트 (평소에는 이 방법)
+
+저장소: **https://github.com/evenzest-afk/mybom-garden**
+
+1. 개발 쪽에서 고친 뒤 `git push`
+2. 관리 화면(`/admin`) → **프로그램 업데이트 → 업데이트 확인 → 지금 적용하기**
+   - 휴대폰·집에서도 됩니다 (`https://bom.bommind.co.kr/admin`)
+   - 저장소의 `server/`·`public/` 만 받아 덮어쓰고, 서버가 스스로 재시작합니다(10초쯤)
+   - **적용 전 자동 백업** — 문제가 생기면 **직전 버전으로 되돌리기** 버튼
+3. `.env`(비밀번호·설정), `data/garden.json`(들판), `data/special-days.json`(기념일)은
+   저장소에 없으므로 절대 덮이지 않습니다.
+
+동작 조건: 병원 PC에 지킴이가 설치되어 있어야 합니다(재시작을 지킴이가 맡습니다).
+업데이트 대상 저장소는 `UPDATE_REPO` 환경변수로 바꿀 수 있습니다.
+
 ## 병원 PC에 수정사항 반영하기 (USB)
 
 압축을 풀면 세 가지가 나온다. **USB 루트에 그대로** 넣는다:

@@ -236,7 +236,11 @@ open -a "Google Chrome" --args --kiosk --noerrdialogs --disable-session-crashed-
 
 ## 대기실 안내 카드
 
-`/card.html`을 열고 인쇄 버튼을 누르면 A5 크기로 출력된다 (QR 자동 삽입).
+- `/card-a4.html` — **A4 한 장에 A5 카드 2장** (가운데 점선에서 자른다). 평소 인쇄용.
+- `/card.html` — A5 한 장짜리.
+
+두 화면 모두 인쇄 버튼이 있고 QR은 자동으로 들어간다.
+업데이트를 실행하면 `C:\MyBom\나의봄-안내카드-A4.pdf` 로도 저장된다.
 
 ## 원격 업데이트 (평소에는 이 방법)
 

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>나의 봄 — 안내 카드 (A4 2장)</title>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  :root { --paper:#F5F1E8; --ink:#35302A; --soft:#7C7466; --line:#D9D1BF; --gold:#B99B5A; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#8C8578; font-family:"Gowun Batang",Georgia,serif; color:var(--ink);
+         display:flex; align-items:center; justify-content:center; min-height:100vh; padding:20px; }
+  .sheet { width:297mm; height:210mm; display:flex; background:var(--paper);
+           box-shadow:0 12px 40px rgba(0,0,0,.3); position:relative; }
+  /* 가운데 자르는 선 */
+  .sheet::after { content:""; position:absolute; left:50%; top:0; bottom:0; width:0;
+                  border-left:1px dashed #C9C0AE; }
+  .card { width:148.5mm; height:210mm; padding:9mm; }
+  .inner { border:1px solid var(--line); height:100%; padding:9mm 8mm;
+           display:flex; flex-direction:column; align-items:center; text-align:center; }
+  .kicker { font-family:sans-serif; font-size:9pt; letter-spacing:3.5px; color:var(--soft); }
+  .rule { width:30mm; height:1px; background:var(--line); margin:4mm 0; }
+  h1 { font-size:26pt; letter-spacing:9px; text-indent:9px; font-weight:700; }
+  .lead { font-size:10pt; line-height:1.9; color:var(--soft); margin-top:5mm; word-break:keep-all; }
+  .mark { width:25mm; margin:5mm 0 4mm; }
+  .mark svg { width:100%; height:auto; display:block; }
+  .qr { width:40mm; height:40mm; border:1px solid var(--line); padding:2mm; background:#fff; }
+  .qr svg { width:100%; height:100%; display:block; }
+  .qr-label { font-family:sans-serif; font-size:8.5pt; line-height:1.6; letter-spacing:1px;
+              color:var(--soft); margin-top:3mm; }
+  .steps { display:flex; gap:5mm; margin-top:5mm; }
+  .step { flex:1; }
+  .step b { display:block; font-size:9.5pt; color:var(--gold); margin-bottom:1mm; }
+  .step span { font-size:9.5pt; color:var(--soft); line-height:1.6; word-break:keep-all; white-space:nowrap; }
+  .foot { margin-top:auto; padding-top:4mm; font-size:9pt; letter-spacing:1px; color:var(--soft); }
+  .print-btn { position:fixed; top:18px; right:18px; padding:10px 18px; background:var(--ink);
+               color:var(--paper); border:0; font-family:inherit; font-size:13px; letter-spacing:2px; cursor:pointer; }
+  @media print { body { background:#fff; padding:0; } .sheet { box-shadow:none; } .print-btn { display:none; } }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">인쇄</button>
+<div class="sheet" id="sheet"></div>
+<script src="js/flower-svg.js"></script>
+<script>
+(async () => {
+  const F = { name:'코스모스', shape:{type:'daisy',petals:8,len:52,w:24,centerR:12,notch:true},
+              palettes:[{petal:'#D9A8BC',petalDeep:'#B97E97',center:'#CBA84F'}] };
+  const mark = FlowerSVG.render(F, 0, { seed: 20260301 });
+  let qr = '';
+  try { qr = (await fetch('/api/qr').then(r => r.json())).svg || ''; } catch (e) {}
+
+  const card = () => `
+    <div class="card"><div class="inner">
+      <span class="kicker">참여형 설치 · 대기실 들판</span>
+      <span class="rule"></span>
+      <h1>나의 봄</h1>
+      <p class="lead">
+        벽면의 들판은 이곳을 다녀간<br>사람들의 마음으로 자랍니다.<br>
+        오늘의 꽃 한 송이를 피워 보세요.
+      </p>
+      <div class="mark">${mark}</div>
+      <div class="qr">${qr}</div>
+      <p class="qr-label">휴대폰 카메라로 비춰 주세요<br>
+        <span style="color:#5C7350">이름도 기록도 남지 않습니다 · 사진은 찍히지 않아요</span></p>
+      <div class="steps">
+        <div class="step"><b>하나</b><span>마음의 날씨</span></div>
+        <div class="step"><b>둘</b><span>필요한 것</span></div>
+        <div class="step"><b>셋</b><span>들판에 심기</span></div>
+      </div>
+      <p class="foot">마음의 꽃은 피어 있다가 바람에 실려 떠납니다</p>
+    </div></div>`;
+
+  document.getElementById('sheet').innerHTML = card() + card();
+})();
+</script>
+</body>
+</html>

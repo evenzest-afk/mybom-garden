@@ -236,7 +236,9 @@ open -a "Google Chrome" --args --kiosk --noerrdialogs --disable-session-crashed-
 
 ## 대기실 안내 카드
 
-- `/card-a4.html` — **A4 한 장에 A5 카드 2장** (가운데 점선에서 자른다). 평소 인쇄용.
+- `/card-a4.html` — **2쪽짜리 인쇄물**
+  - 1쪽: A4 가로에 A5 카드 2장 (가운데 점선에서 자른다) — 테이블·의자에 두는 용도
+  - 2쪽: A4 세로에 큰 카드 1장 — 접수대·벽면 게시용
 - `/card.html` — A5 한 장짜리.
 
 두 화면 모두 인쇄 버튼이 있고 QR은 자동으로 들어간다.

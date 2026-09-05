@@ -7,7 +7,6 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const QRCode = require('qrcode');
-const AdmZip = require('adm-zip');
 
 // 프로젝트 폴더의 .env 파일을 읽는다 (있으면). 실제 환경변수가 우선.
 // 예: ADMIN_PASSWORD=비밀번호  /  CLOSING_TIME=18:00
@@ -689,6 +688,11 @@ app.post('/api/admin/update/apply', async (req, res) => {
     const zipRes = await fetch(`https://codeload.github.com/${UPDATE_REPO}/zip/refs/heads/${UPDATE_BRANCH}`,
       { signal: AbortSignal.timeout(60000) });
     if (!zipRes.ok) throw new Error('download ' + zipRes.status);
+    // adm-zip 은 원격 업데이트에만 쓴다. 예전 설치본에는 없을 수 있으므로
+    // 여기서 늦게 불러온다 — 없더라도 사이니지는 정상 동작해야 한다.
+    let AdmZip;
+    try { AdmZip = require('adm-zip'); }
+    catch { throw new Error('adm-zip 모듈이 없습니다. USB의 업데이트.bat 으로 한 번 갱신해 주세요.'); }
     const zip = new AdmZip(Buffer.from(await zipRes.arrayBuffer()));
     const entries = zip.getEntries();
     if (!entries.length) throw new Error('빈 압축');

@@ -10,6 +10,7 @@
   let ORIENT_SETTING = 'auto';  // auto | landscape | portrait (관리 화면에서 변경)
   let WEATHER = { category: 'clear', windKmh: 0 };
   const onField = new Map();    // id -> { entry, el }
+  let fieldBaseAge = 0;         // 들판에서 가장 최근 꽃의 나이 — 깊이의 기준점
   const rank = new Map();       // id -> 최신순 순위 (밀도 상한 판단용)
 
 
@@ -246,7 +247,10 @@
   function layerFor(entry) {
     const cap = CONFIG.maxVisible || Infinity;
     if ((rank.get(entry.id) ?? 0) >= cap) return currentLayout().farLayer;
-    const age = ageDays(entry.date);
+    // 깊이는 절대 나이가 아니라 '들판에서 가장 최근 꽃'과의 거리로 잰다.
+    // 며칠 참여가 뜸해도 가장 최근 꽃들은 전경에 남아, 들판이 원경으로만
+    // 몰리지 않는다. 새 꽃이 오면 나머지가 8초에 걸쳐 부드럽게 물러난다.
+    const age = Math.max(0, ageDays(entry.date) - fieldBaseAge);
     const L = currentLayout().layers;
     if (age < L.length) return L[age];
     return currentLayout().farLayer;
@@ -259,6 +263,7 @@
     arr.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
     rank.clear();
     arr.forEach((e, i) => rank.set(e.id, i));
+    fieldBaseAge = arr.length ? ageDays(arr[0].date) : 0;
   }
 
   function depthOf(entry) {
@@ -424,6 +429,9 @@
       onField.delete(id);
       setTimeout(() => item.el.remove(), 11000 + i * 350);
     });
+    // 가장 최근 꽃이 떠났을 수 있으니 기준을 다시 잡고 남은 꽃을 앞으로 당긴다
+    recomputeRanks();
+    for (const { entry, el } of onField.values()) applyLayout(entry, el);
   }
 
   // 날짜가 바뀌면 레이어 재계산 (전경 → 중경으로 물러남)
@@ -431,6 +439,7 @@
   setInterval(() => {
     if (todayStr() !== lastLayoutDay) {
       lastLayoutDay = todayStr();
+      recomputeRanks();
       for (const { entry, el } of onField.values()) applyLayout(entry, el);
     }
   }, 5 * 60 * 1000);
